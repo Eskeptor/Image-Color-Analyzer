@@ -1,0 +1,21 @@
+﻿<Window x:Name="sub_about" x:Class="Schoolworks_image_and_color.About_Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Schoolworks_image_and_color"
+        mc:Ignorable="d"
+        Title="{DynamicResource main_menu_about}" Height="222.832" Width="329.48" ResizeMode="NoResize" BorderBrush="Black">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="57*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="323.48"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="textBlock" Margin="0,0,0,1.267" TextWrapping="Wrap" Text="{DynamicResource about_context}"/>
+        <Rectangle Fill="#FFB9B9B9" Margin="0,-1.267,0,0" Grid.Row="1"/>
+
+    </Grid>
+</Window>

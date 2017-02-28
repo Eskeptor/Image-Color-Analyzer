@@ -1,0 +1,80 @@
+﻿<Window x:Name="sub_analyzer" x:Class="Schoolworks_image_and_color.Analyzer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Schoolworks_image_and_color"
+        mc:Ignorable="d"
+        Closing="Window_Closing"
+        Activated="Window_Activated"
+        Title="{DynamicResource main_menu_analyze}" Height="399" Width="700" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid VerticalAlignment="Top">
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="4" TextWrapping="Wrap" d:LayoutOverrides="Height" Text="{DynamicResource analyze_txt_filename}"/>
+            <TextBlock x:Name="filename_block" Margin="92.067,4,0,4" TextWrapping="WrapWithOverflow" Text="filename block" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left"/>
+        </Grid>
+        <Grid Margin="0,23.96,0,0" VerticalAlignment="Top">
+            <Button x:Name="btn_analyze" HorizontalAlignment="Left"  Width="80.333" Click="Analyze_click" Content="{DynamicResource analyze_btn_analyze}" />
+            <TextBlock x:Name="txt_status" HorizontalAlignment="Left" Margin="87.907,2,0,2" TextWrapping="Wrap" Text="status block" d:LayoutOverrides="Height"/>
+        </Grid>
+        <Grid Margin="0,43.92,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="23*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Rectangle x:Name="rect_color1" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom"/>
+            <Rectangle x:Name="rect_color2" Grid.Column="1" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom"/>
+            <Rectangle x:Name="rect_color3" Grid.Column="2" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom"/>
+            <Rectangle x:Name="rect_color4" Grid.Column="3" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom"/>
+            <Rectangle x:Name="rect_color5" Grid.Column="4" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom"/>
+            <Rectangle x:Name="rect_color6" Grid.Column="5" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom"/>
+            <Rectangle x:Name="rect_color7" Grid.Column="6" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom"/>
+            <Rectangle x:Name="rect_color8" Grid.Column="7" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom"/>
+            <Rectangle x:Name="rect_color9" Grid.Column="8" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom"/>
+            <Rectangle x:Name="rect_color10" Grid.Column="9" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom"/>
+            <Rectangle x:Name="rect_color11" Grid.Column="10" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom"/>
+            <Rectangle x:Name="rect_color12" Grid.Column="11" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom"/>
+            <Rectangle x:Name="rect_color13" Grid.Column="12" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom"/>
+            <Rectangle x:Name="rect_color14" Grid.Column="13" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom"/>
+            <Rectangle x:Name="rect_color15" Grid.Column="14" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom" />
+            <Rectangle x:Name="rect_color16" Grid.Column="15" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom" />
+            <Button x:Name="btn_color1" Content="Color1" Grid.Row="1" FontSize="10" Click="Detail_click1" IsEnabled="False"/>
+            <Button x:Name="btn_color2" Content="Color2" Grid.Row="1" Grid.Column="1" FontSize="10" Click="Detail_click2" IsEnabled="False"/>
+            <Button x:Name="btn_color3" Content="Color3" Grid.Row="1" Grid.Column="2" FontSize="10" Click="Detail_click3" IsEnabled="False"/>
+            <Button x:Name="btn_color4" Content="Color4" Grid.Row="1" Grid.Column="3" FontSize="10" Click="Detail_click4" IsEnabled="False"/>
+            <Button x:Name="btn_color5" Content="Color5" Grid.Row="1" Grid.Column="4" FontSize="10" Click="Detail_click5" IsEnabled="False"/>
+            <Button x:Name="btn_color6" Content="Color6" Grid.Row="1" Grid.Column="5" FontSize="10" Click="Detail_click6" IsEnabled="False"/>
+            <Button x:Name="btn_color7" Content="Color7" Grid.Row="1" Grid.Column="6" FontSize="10" Click="Detail_click7" IsEnabled="False"/>
+            <Button x:Name="btn_color8" Content="Color8" Grid.Row="1" Grid.Column="7" FontSize="10" Click="Detail_click8" IsEnabled="False"/>
+            <Button x:Name="btn_color9" Content="Color9" Grid.Row="1" Grid.Column="8" FontSize="10" Click="Detail_click9" IsEnabled="False"/>
+            <Button x:Name="btn_color10" Content="Color10" Grid.Row="1" Grid.Column="9" FontSize="10" Click="Detail_click10" IsEnabled="False"/>
+            <Button x:Name="btn_color11" Content="Color11" Grid.Row="1" Grid.Column="10" FontSize="10" Click="Detail_click11" IsEnabled="False"/>
+            <Button x:Name="btn_color12" Content="Color12" Grid.Row="1" Grid.Column="11" FontSize="10" Click="Detail_click12" IsEnabled="False"/>
+            <Button x:Name="btn_color13" Content="Color13" Grid.Row="1" Grid.Column="12" FontSize="10" Click="Detail_click13" IsEnabled="False"/>
+            <Button x:Name="btn_color14" Content="Color14" Grid.Row="1" Grid.Column="13" FontSize="10" Click="Detail_click14" IsEnabled="False"/>
+            <Button x:Name="btn_color15" Content="Color15" Grid.Row="1" Grid.Column="14" FontSize="10" Click="Detail_click15" IsEnabled="False"/>
+            <Button x:Name="btn_color16" Content="Color16" Grid.Row="1" Grid.Column="15" FontSize="10" Click="Detail_click16" IsEnabled="False"/>
+        </Grid>
+    </Grid>
+</Window>

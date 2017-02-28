@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Schoolworks_image_and_color"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib">
+
+    <System:String x:Key="analyze_txt_filename">Current Filename :</System:String>
+    <System:String x:Key="analyze_btn_analyze">Analyze</System:String>
+    <System:String x:Key="main_menu_file">File</System:String>
+    <System:String x:Key="main_menu_open">Open</System:String>
+    <System:String x:Key="main_menu_close">Close</System:String>
+    <System:String x:Key="main_menu_exit">Exit</System:String>
+    <System:String x:Key="main_menu_window">Window</System:String>
+    <System:String x:Key="main_menu_resize">Window Resize</System:String>
+    <System:String x:Key="main_menu_win_reset">Window Reset</System:String>
+    <System:String x:Key="main_menu_win_optimize">Window Size Optimize</System:String>
+    <System:String x:Key="main_menu_tools">Tools</System:String>
+    <System:String x:Key="main_menu_analyze">Analyze</System:String>
+    <System:String x:Key="main_menu_help">Help</System:String>
+    <System:String x:Key="main_menu_about">About Program</System:String>
+    <System:String x:Key="about_context">This program is for my university report. This program follows the " GNU General Public License 3 ".</System:String>
+
+</ResourceDictionary>

@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Schoolworks_image_and_color"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib">
+
+    <System:String x:Key="analyze_txt_filename">현재 파일이름 :</System:String>
+    <System:String x:Key="analyze_btn_analyze">분석</System:String>
+    <System:String x:Key="main_menu_file">파일</System:String>
+    <System:String x:Key="main_menu_open">열기</System:String>
+    <System:String x:Key="main_menu_close">닫기</System:String>
+    <System:String x:Key="main_menu_exit">종료</System:String>
+    <System:String x:Key="main_menu_window">창</System:String>
+    <System:String x:Key="main_menu_resize">창 크기 변경</System:String>
+    <System:String x:Key="main_menu_win_reset">창 크기 초기화</System:String>
+    <System:String x:Key="main_menu_win_optimize">창 크기 최적화</System:String>
+    <System:String x:Key="main_menu_tools">도구</System:String>
+    <System:String x:Key="main_menu_analyze">분석</System:String>
+    <System:String x:Key="main_menu_help">도움말</System:String>
+    <System:String x:Key="main_menu_about">프로그램에 대해서</System:String>
+    <System:String x:Key="about_context">이 프로그램은 대학교 프로젝트의 일환으로 만들어졌습니다. 본 프로그램은 "GNU General Public License 3"를 따릅니다. </System:String>
+
+</ResourceDictionary>
