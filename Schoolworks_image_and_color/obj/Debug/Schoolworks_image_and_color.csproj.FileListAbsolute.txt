@@ -41,3 +41,6 @@ E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Sc
 E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\obj\Debug\App.baml
 E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\obj\Debug\Resource_String.en-US.baml
 E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\obj\Debug\Resource_String.ko-KR.baml
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\Schoolworks_image_and_color.exe.config
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.exe
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.pdb

@@ -1,9 +1,10 @@
 # Welcome to my "Image and Color Project"
 ## About this project
 My School works project in Multimedia System class.
-## What's New? (Last updated 2017.2.27)
+## What's New? (Last updated 2017.2.28)
 ```
- 1) Optimize ColorHistogram Function(Speed up speed by 20 times)
+ 1) Language localization(Korean, English)
+ 2) Eliminate unwanted sources.
 ```
 ## Next Updates
 ```
