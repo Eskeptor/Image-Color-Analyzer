@@ -20,5 +20,5 @@ My School works project in Multimedia System class.
  3) Show Color Histogram
    - This function is Beta
 ```
-##Good Bye!!
+## Good Bye!!
 Compiled by Visual Studio 2015 and Blend for Visual Studio 2015
