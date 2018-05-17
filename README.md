@@ -1,13 +1,13 @@
 # Welcome to my "Image and Color Project"
 ## About this project
 My School works project in Multimedia System class.
-## What's New? (Last updated 2017.2.27)
+## What's New? (Last updated 2018.5.17)
 ```
- 1) Optimize ColorHistogram Function(Speed up speed by 20 times)
+ 1) Add ColorHistogram Function(using OpenCV)
 ```
 ## Next Updates
 ```
- 1) Change ColorHistogram Function (Working..)
+ 1) UI Change
 ```
 ## Manual
 ```
@@ -20,4 +20,4 @@ My School works project in Multimedia System class.
    - This function is Beta
 ```
 ##Good Bye!!
-Compiled by Visual Studio 2015 and Blend for Visual Studio 2015
+Compiled by Visual Studio 2017 and Blend for Visual Studio 2017
