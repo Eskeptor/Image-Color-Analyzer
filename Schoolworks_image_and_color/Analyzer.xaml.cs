@@ -7,6 +7,8 @@ using System.IO;
 using System.Reflection;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Threading;
+using OpenCvSharp;
 
 
 // Lockbits Documentation MSDN : https://msdn.microsoft.com/en-us/library/5ey6h79d(v=vs.110).aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-1 
@@ -27,6 +29,8 @@ static class Constants
     public const int STRING_DIVIDE_FREQUENCY = 3;
 
     public const double RECTANGLE_MAX_HEIGHT = 300;
+
+    public const int HISTOGRAM_MAX = 3;
 }
 
 // ColorC class for ColorCount and Analyze Color;
@@ -61,21 +65,28 @@ namespace Schoolworks_image_and_color
     /// <summary>
     /// Analyzer.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class Analyzer : Window
+    public partial class Analyzer : System.Windows.Window
     {
-        Bitmap image;
-        System.Drawing.Rectangle rect;
+        private Bitmap image;
+        private string imageURL;
+        private Rectangle rect;
         // For LockBits
-        System.Drawing.Imaging.BitmapData bmpData;
+        private System.Drawing.Imaging.BitmapData bmpData;
         // Detail window object;
-        Detail detail;
+        private Detail detail;
         // rectangle array is Rectagle array for this.rect_colors;
-        System.Windows.Shapes.Rectangle[] rectangle;
+        private System.Windows.Shapes.Rectangle[] rectangle;
 
         // Check Analyze;
-        bool has_analyze;
+        private bool has_analyze;
         // Check image changed;
-        bool change_image;
+        private bool change_image;
+
+        private Thread topColorThread;
+        private Thread colorHistogramThread;
+        delegate void TopColorThreadDelegate(bool check);
+        delegate void SetRectangleColorsDelegate(RGB[] colors, int max);
+        delegate void ColorHistogramDelegate();
 
         public Analyzer()
         {
@@ -90,7 +101,8 @@ namespace Schoolworks_image_and_color
         public void LockImage(BitmapImage image)
         {
             this.image = BitmapImage2Bitmap(image);
-            filename_block.Text = image.UriSource.ToString();
+            imageURL = image.UriSource.LocalPath;
+            filename_block.Text = imageURL;
             txt_status.Text = "";
             rect = new System.Drawing.Rectangle(0, 0, this.image.Width, this.image.Height);
             bmpData = this.image.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
@@ -107,20 +119,105 @@ namespace Schoolworks_image_and_color
         private void Analyze_click(object sender, RoutedEventArgs e)
         {
             Stopwatch sw = new Stopwatch();
-            MessageBox.Show(this, "This Function is test function", "Caution");
+            topColorThread = new Thread(() =>
+            {
+                sw.Start();
+                Dispatcher.Invoke(new TopColorThreadDelegate(Analyze_ButtonDisabler), false);
+                BitmapRGBConvert();
+                ColorCounter();
+                ViewTopColors();
+               
+                change_image = false;
+                has_analyze = true;
+                Dispatcher.Invoke(new TopColorThreadDelegate(Analyze_ButtonDisabler), true);
+                sw.Stop();
+                MessageBox.Show(sw.ElapsedMilliseconds.ToString() + "ms");
+            });
+            topColorThread.Start();
 
-            sw.Start();
-            btn_analyze.IsEnabled = false;
-            BitmapRGBConvert();
-            ColorCounter();
-            ColorHistogram();
-            txt_status.Text = "Analyze Complete";
-           
-            change_image = false;
-            has_analyze = true;
-            btn_analyze.IsEnabled = true;
-            sw.Stop();
-            MessageBox.Show(sw.ElapsedMilliseconds.ToString() + "ms");
+            colorHistogramThread = new Thread(() =>
+            {
+                GetHistogram(new Mat(imageURL));
+            });
+            colorHistogramThread.Start();
+        }
+
+        private void GetHistogram(Mat source)
+        {
+            Mat[] histogram = new Mat[Constants.HISTOGRAM_MAX];    // 0 = blue, 1 = green, 2 = red
+            Mat[] histoImage = new Mat[Constants.HISTOGRAM_MAX];
+            const int width = 260, height = 200;      
+            int[] dimensions = { 256 };         
+            Rangef[] ranges = { new Rangef(0, 256) }; 
+
+            // channel
+            // 0 = blue
+            // 1 = green
+            // 2 = red
+            double minVal, maxVal;
+            for (int i = 0; i < Constants.HISTOGRAM_MAX; i++)
+            {
+                histogram[i] = new Mat();
+                Cv2.CalcHist(
+                    images: new[] { source },
+                    channels: new[] { i }, 
+                    mask: null,
+                    hist: histogram[i],
+                    dims: 1,
+                    histSize: dimensions,
+                    ranges: ranges);
+
+                //Cv2.Normalize(histogram[i], histogram[i], 0, 1, NormTypes.MinMax, -1, null);
+                Cv2.MinMaxLoc(histogram[i], out minVal, out maxVal);
+                histogram[i] = histogram[i] * (maxVal != 0 ? height / maxVal : 0.0);
+                histoImage[i] = new Mat(new OpenCvSharp.Size(width, height), MatType.CV_8UC3, Scalar.All(255));
+            }
+
+            int binWidth;
+            for (int i = 0; i < dimensions[0]; i++)
+            {
+                binWidth = (int)((double)width / dimensions[0]);
+               
+                Cv2.Line(histoImage[0], new OpenCvSharp.Point(i * binWidth, histoImage[0].Rows),
+                    new OpenCvSharp.Point((i + 1) * binWidth, histoImage[0].Rows - (int)(histogram[0].Get<float>(i))), 
+                    new Scalar(255, 0, 0));
+
+                Cv2.Line(histoImage[1], new OpenCvSharp.Point(i * binWidth, histoImage[1].Rows),
+                    new OpenCvSharp.Point((i + 1) * binWidth, histoImage[1].Rows - (int)(histogram[1].Get<float>(i))),
+                    new Scalar(0, 255, 0));
+
+                Cv2.Line(histoImage[2], new OpenCvSharp.Point(i * binWidth, histoImage[2].Rows),
+                    new OpenCvSharp.Point((i + 1) * binWidth, histoImage[2].Rows - (int)(histogram[2].Get<float>(i))),
+                    new Scalar(0, 0, 255));
+            }
+
+            for (int i = 0; i < Constants.HISTOGRAM_MAX; i++)
+            {
+                OpenCvSharp.Extensions.BitmapConverter.ToBitmap(histoImage[i]).Save(System.IO.Directory.GetCurrentDirectory() + @"\" + i + ".png", System.Drawing.Imaging.ImageFormat.Png);
+            }
+
+            Dispatcher.Invoke(new ColorHistogramDelegate(DrawColorHistogram));
+        }
+
+        private void DrawColorHistogram()
+        {
+            string cur = System.IO.Directory.GetCurrentDirectory();
+            BitmapImage[] images = new BitmapImage[Constants.HISTOGRAM_MAX];
+            for (int i = 0; i < Constants.HISTOGRAM_MAX; i++)
+            {
+                images[i] = new BitmapImage();
+                images[i].BeginInit();
+                images[i].UriSource = new Uri(cur + @"\" + i + ".png");
+                images[i].EndInit();
+            }
+            img_color_histogram_blue.Source = images[0];
+            img_color_histogram_green.Source = images[1];
+            img_color_histogram_red.Source = images[2];
+        }
+
+        private void Analyze_ButtonDisabler(bool check)
+        {
+            btn_analyze.IsEnabled = check;
         }
 
         // Detail_clicks button actions show the details(Color details);
@@ -278,7 +375,7 @@ namespace Schoolworks_image_and_color
         }
 
         // Analyze colorcount.dat and drawing color histogram
-        private void ColorHistogram()
+        private void ViewTopColors()
         {
             StreamReader streamreader = new StreamReader("colorcount.dat");
             //This code(streamwriter) is test code(verify that codes for storage -> frequency array)
@@ -379,15 +476,17 @@ namespace Schoolworks_image_and_color
             rectangle[15] = rect_color16;
 
             // According to result, Fill the rectangle;
-           
+            Dispatcher.Invoke(new SetRectangleColorsDelegate(SetRectangleColor), color, max);
+        }
+
+        private void SetRectangleColor(RGB[] color, int max)
+        {
             for (int i = 0; i < 16; i++)
             {
                 rectangle[i].Fill = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)color[i].red, (byte)color[i].green, (byte)color[i].blue));
                 double height = (double)color[i].frequency;
                 rectangle[i].Height = height / max * Constants.RECTANGLE_MAX_HEIGHT;
             }
-
-            // After the analyze, button is enable; 
             btn_color1.IsEnabled = true;
             btn_color2.IsEnabled = true;
             btn_color3.IsEnabled = true;
@@ -404,6 +503,7 @@ namespace Schoolworks_image_and_color
             btn_color14.IsEnabled = true;
             btn_color15.IsEnabled = true;
             btn_color16.IsEnabled = true;
+            txt_status.Text = "Analyze Complete";
         }
 
         // BitmapImage Convert to Bitmap;
@@ -419,6 +519,24 @@ namespace Schoolworks_image_and_color
 
                 return new Bitmap(bitmap);
             }
+        }
+
+        // Copyright: http://frasergreenroyd.com/how-to-convert-opencv-cvmat-to-system-bitmap-to-system-imagesource/
+        private ImageSource BitmapToImageSource(Bitmap imToConvert)
+        {
+            Bitmap bmp = new Bitmap(imToConvert);
+            MemoryStream ms = new MemoryStream();
+            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            ms.Seek(0, SeekOrigin.Begin);
+            image.StreamSource = ms;
+            image.EndInit();
+
+            ImageSource sc = (ImageSource)image;
+
+            return sc;
         }
 
         // Show Detail information of color;
@@ -445,9 +563,9 @@ namespace Schoolworks_image_and_color
         // For Re-open Window;
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            (typeof(Window)).GetField("_isClosing", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(sender, false);
+            (typeof(System.Windows.Window)).GetField("_isClosing", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(sender, false);
             e.Cancel = true;
-            (sender as Window).Hide();
+            (sender as System.Windows.Window).Hide();
         }
 
         // When this window re-open, it is determined whether or not initialization;

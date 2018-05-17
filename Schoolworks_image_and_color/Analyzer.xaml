@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Closing="Window_Closing"
         Activated="Window_Activated"
-        Title="{DynamicResource main_menu_analyze}" Height="399" Width="700" ResizeMode="NoResize">
+        Title="{DynamicResource main_menu_analyze}" Height="483" Width="1007" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -20,7 +20,7 @@
             <Button x:Name="btn_analyze" HorizontalAlignment="Left"  Width="80.333" Click="Analyze_click" Content="{DynamicResource analyze_btn_analyze}" />
             <TextBlock x:Name="txt_status" HorizontalAlignment="Left" Margin="87.907,2,0,2" TextWrapping="Wrap" Text="status block" d:LayoutOverrides="Height"/>
         </Grid>
-        <Grid Margin="0,43.92,0,0">
+        <Grid Margin="0,43.92,553,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -76,5 +76,8 @@
             <Button x:Name="btn_color15" Content="Color15" Grid.Row="1" Grid.Column="14" FontSize="10" Click="Detail_click15" IsEnabled="False"/>
             <Button x:Name="btn_color16" Content="Color16" Grid.Row="1" Grid.Column="15" FontSize="10" Click="Detail_click16" IsEnabled="False"/>
         </Grid>
+        <Image x:Name="img_color_histogram_blue" HorizontalAlignment="Left" Height="200" Margin="453,254,0,0" VerticalAlignment="Top" Width="260"/>
+        <Image x:Name="img_color_histogram_red" HorizontalAlignment="Left" Height="200" Margin="453,43.92,0,0" VerticalAlignment="Top" Width="260"/>
+        <Image x:Name="img_color_histogram_green" HorizontalAlignment="Left" Height="200" Margin="718,43.92,0,0" VerticalAlignment="Top" Width="260"/>
     </Grid>
 </Window>

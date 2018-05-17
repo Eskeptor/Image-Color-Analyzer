@@ -41,6 +41,21 @@ E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Sc
 E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\obj\Debug\App.baml
 E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\obj\Debug\Resource_String.en-US.baml
 E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\obj\Debug\Resource_String.ko-KR.baml
-E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\Schoolworks_image_and_color.exe.config
-E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.exe
-E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.pdb
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.csproj.CoreCompileInputs.cache
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\dll\x86\OpenCvSharpExtern.dll
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\dll\x86\opencv_ffmpeg341.dll
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\dll\x64\OpenCvSharpExtern.dll
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\dll\x64\opencv_ffmpeg341_64.dll
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.Blob.dll
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.dll
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.Extensions.dll
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.UserInterface.dll
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.pdb
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.xml
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.Blob.pdb
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.Blob.xml
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.Extensions.pdb
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.Extensions.xml
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.UserInterface.pdb
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.UserInterface.xml
+E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.csproj.CopyComplete

@@ -1,10 +1,9 @@
 # Welcome to my "Image and Color Project"
 ## About this project
 My School works project in Multimedia System class.
-## What's New? (Last updated 2017.2.28)
+## What's New? (Last updated 2017.2.27)
 ```
- 1) Language localization(Korean, English)
- 2) Eliminate unwanted sources.
+ 1) Optimize ColorHistogram Function(Speed up speed by 20 times)
 ```
 ## Next Updates
 ```
@@ -20,5 +19,5 @@ My School works project in Multimedia System class.
  3) Show Color Histogram
    - This function is Beta
 ```
-## Good Bye!!
+##Good Bye!!
 Compiled by Visual Studio 2015 and Blend for Visual Studio 2015
