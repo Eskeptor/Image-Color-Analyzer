@@ -5,6 +5,7 @@
 
     <System:String x:Key="analyze_txt_filename">Current Filename :</System:String>
     <System:String x:Key="analyze_btn_analyze">Analyze</System:String>
+    <System:String x:Key="analyze_btn_complete">Complete</System:String>
     <System:String x:Key="main_menu_file">File</System:String>
     <System:String x:Key="main_menu_open">Open</System:String>
     <System:String x:Key="main_menu_close">Close</System:String>
@@ -14,9 +15,17 @@
     <System:String x:Key="main_menu_win_reset">Window Reset</System:String>
     <System:String x:Key="main_menu_win_optimize">Window Size Optimize</System:String>
     <System:String x:Key="main_menu_tools">Tools</System:String>
-    <System:String x:Key="main_menu_analyze">Analyze</System:String>
+    <System:String x:Key="main_menu_analyze">Histogram Analysis</System:String>
+    <System:String x:Key="main_menu_similar">Comparative analysis of image similarity</System:String>
     <System:String x:Key="main_menu_help">Help</System:String>
     <System:String x:Key="main_menu_about">About Program</System:String>
-    <System:String x:Key="about_context">This program is for my university report. This program follows the " GNU General Public License 3 ".</System:String>
-
+    <System:String x:Key="about_context" xml:space="preserve">This program is for my university report.&#13;This program follows the "Apache License, Version 2.0".&#13;Creator : Honam University Computer Engineering Department Jeon Ye-chan&#13;</System:String>
+    <System:String x:Key="analyze_group_one">A high frequency color</System:String>
+    <System:String x:Key="analyze_group_two">Color Histogram</System:String>
+    <System:String x:Key="similar_group_target">Target Image</System:String>
+    <System:String x:Key="similar_group_result">Result Image</System:String>
+    <System:String x:Key="similar_group_complist">Compare Image List</System:String>
+    <System:String x:Key="similar_btn_image_select">Select Image</System:String>
+    <System:String x:Key="msg_warning_similar_image">Please insert images for comparison.</System:String>
+    
 </ResourceDictionary>

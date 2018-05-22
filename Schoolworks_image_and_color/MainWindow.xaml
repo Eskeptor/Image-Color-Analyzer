@@ -13,21 +13,22 @@
         </Grid.ColumnDefinitions>
         <Menu x:Name="menu" Height="20.388" Margin="0.988,0,0,0" VerticalAlignment="Top" Background="{x:Null}">
             <MenuItem x:Name="menu_file" Header="{DynamicResource main_menu_file}" >
-                <MenuItem x:Name="menu_open" Header="{DynamicResource main_menu_open}" Click="Open_click"/>
-                <MenuItem x:Name="menu_close" Header="{DynamicResource main_menu_close}" Click="Close_click" IsEnabled="False"/>
+                <MenuItem x:Name="menu_open" Header="{DynamicResource main_menu_open}" Click="ActionMenuOpen"/>
+                <MenuItem x:Name="menu_close" Header="{DynamicResource main_menu_close}" Click="ActionMenuClose" IsEnabled="False"/>
                 <Separator/>
-                <MenuItem x:Name="menu_exit" Header="{DynamicResource main_menu_exit}" Click="Exit_click"/>
+                <MenuItem x:Name="menu_exit" Header="{DynamicResource main_menu_exit}" Click="ActionMenuExit"/>
             </MenuItem>
             <MenuItem x:Name="menu_window" Header="{DynamicResource main_menu_window}">
-                <MenuItem x:Name="menu_resize" Header="{DynamicResource main_menu_resize}" Click="Resize_click" />
-                <MenuItem x:Name="menu_win_reset" Header="{DynamicResource main_menu_win_reset}" Click="Reset_click" />
-                <MenuItem x:Name="menu_win_optimize" Header="{DynamicResource main_menu_win_optimize}" Click="Optimize_click" IsChecked="True" />
+                <MenuItem x:Name="menu_resize" Header="{DynamicResource main_menu_resize}" Click="ActionMenuResize" />
+                <MenuItem x:Name="menu_win_reset" Header="{DynamicResource main_menu_win_reset}" Click="ActionMenuReset" />
+                <MenuItem x:Name="menu_win_optimize" Header="{DynamicResource main_menu_win_optimize}" Click="ActionMenuOptimize" IsChecked="True" />
             </MenuItem>
             <MenuItem x:Name="menu_tools" Header="{DynamicResource main_menu_tools}">
-                <MenuItem x:Name="menu_analyze" Header="{DynamicResource main_menu_analyze}" IsEnabled="False" Click="Analyze_click"/>
+                <MenuItem x:Name="menu_analyze" Header="{DynamicResource main_menu_analyze}" IsEnabled="False" Click="ActionMenuAnalyzer"/>
+                <MenuItem x:Name="menu_similar" Header="{DynamicResource main_menu_similar}" IsEnabled="False" Click="ActionMenuSimilar" />
             </MenuItem>
             <MenuItem x:Name="menu_help" Header="{DynamicResource main_menu_help}">
-                <MenuItem x:Name="menu_about" Header="{DynamicResource main_menu_about}" Click="About_click" />
+                <MenuItem x:Name="menu_about" Header="{DynamicResource main_menu_about}" Click="ActionMenuAbout" />
             </MenuItem>
         </Menu>
         <Viewbox Margin="-3,20,-3,0" VerticalAlignment="Top" Height="4" UseLayoutRounding="True" Stretch="Fill">

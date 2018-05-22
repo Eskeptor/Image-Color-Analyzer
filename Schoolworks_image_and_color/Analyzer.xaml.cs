@@ -17,119 +17,139 @@ using OpenCvSharp;
 // Window.Activated Event Documentation MSDN : https://msdn.microsoft.com/en-us/library/system.windows.application.activated(v=vs.110).aspx
 // BitmapImage2Bitmap Source by http://stackoverflow.com/questions/6484357/converting-bitmapimage-to-bitmap-and-vice-versa 
 // ResizeArray Source by http://www.source-code.biz/snippets/csharp/1.htm
+// Release Image from Image Source by : https://stackoverflow.com/questions/16908383/how-to-release-image-from-image-source-in-wpf
 
-
-static class Constants
-{
-    public const int LIST_MAX = 16;
-
-    public const int STRING_DIVIDE_RED = 0;
-    public const int STRING_DIVIDE_GREEN = 1;
-    public const int STRING_DIVIDE_BLUE = 2;
-    public const int STRING_DIVIDE_FREQUENCY = 3;
-
-    public const double RECTANGLE_MAX_HEIGHT = 300;
-
-    public const int HISTOGRAM_MAX = 3;
-}
 
 // ColorC class for ColorCount and Analyze Color;
 class ColorC
 {
-    public string color_code;  // for 
-    public int cnt;
     public ColorC(string code)
     {
-        color_code = code;
-        cnt = 1;
+        ColorCode = code;
+        Count = 1;
     }
+    public string ColorCode { get; set; }
+    public int Count { get; set; }
 }
 
 class RGB
 {
-    public int red;
-    public int green;
-    public int blue;
-    public int frequency;
     public RGB(string red, string green, string blue, string frequency)
     {
-        this.red = int.Parse(red);
-        this.green = int.Parse(green);
-        this.blue = int.Parse(blue);
-        this.frequency = int.Parse(frequency);
+        Red = int.Parse(red);
+        Green = int.Parse(green);
+        Blue = int.Parse(blue);
+        Frequency = int.Parse(frequency);
     }
+    public int Red { get; set; }
+    public int Green { get; set; }
+    public int Blue { get; set; }
+    public int Frequency { get; set; }
 }
 
 namespace Schoolworks_image_and_color
 {
+
     /// <summary>
     /// Analyzer.xaml에 대한 상호 작용 논리
     /// </summary>
     public partial class Analyzer : System.Windows.Window
     {
-        private Bitmap image;
-        private string imageURL;
-        private Rectangle rect;
+        private Bitmap mTargetImage;
+        private string mTargetImageURL;
+        private Rectangle mRect;
         // For LockBits
-        private System.Drawing.Imaging.BitmapData bmpData;
+        private System.Drawing.Imaging.BitmapData mTargetBmpData;
         // Detail window object;
-        private Detail detail;
+        private Detail mDetailWindow;
         // rectangle array is Rectagle array for this.rect_colors;
-        private System.Windows.Shapes.Rectangle[] rectangle;
+        private System.Windows.Shapes.Rectangle[] mColorList;
+        private System.Windows.Controls.Button[] mDetailButtons;
 
-        // Check Analyze;
-        private bool has_analyze;
         // Check image changed;
-        private bool change_image;
+        private bool mIsChangedImage;
 
         private Thread topColorThread;
         private Thread colorHistogramThread;
-        delegate void TopColorThreadDelegate(bool check);
+        delegate void TopColorThreadDelegate(bool check, string reference);
         delegate void SetRectangleColorsDelegate(RGB[] colors, int max);
         delegate void ColorHistogramDelegate();
 
         public Analyzer()
         {
             InitializeComponent();
-            detail = new Detail();
-            rectangle = new System.Windows.Shapes.Rectangle[16];
-            has_analyze = false;
-            change_image = false;
+            mDetailWindow = new Detail();
+            mColorList = new System.Windows.Shapes.Rectangle[Constants.LIST_MAX];
+            mDetailButtons = new System.Windows.Controls.Button[Constants.LIST_MAX];
+            mIsChangedImage = false;
+
+            mColorList[0] = rect_color1;
+            mColorList[1] = rect_color2;
+            mColorList[2] = rect_color3;
+            mColorList[3] = rect_color4;
+            mColorList[4] = rect_color5;
+            mColorList[5] = rect_color6;
+            mColorList[6] = rect_color7;
+            mColorList[7] = rect_color8;
+            mColorList[8] = rect_color9;
+            mColorList[9] = rect_color10;
+            mColorList[10] = rect_color11;
+            mColorList[11] = rect_color12;
+            mColorList[12] = rect_color13;
+            mColorList[13] = rect_color14;
+            mColorList[14] = rect_color15;
+            mColorList[15] = rect_color16;
+
+            mDetailButtons[0] = btn_color1;
+            mDetailButtons[1] = btn_color2;
+            mDetailButtons[2] = btn_color3;
+            mDetailButtons[3] = btn_color4;
+            mDetailButtons[4] = btn_color5;
+            mDetailButtons[5] = btn_color6;
+            mDetailButtons[6] = btn_color7;
+            mDetailButtons[7] = btn_color8;
+            mDetailButtons[8] = btn_color9;
+            mDetailButtons[9] = btn_color10;
+            mDetailButtons[10] = btn_color11;
+            mDetailButtons[11] = btn_color12;
+            mDetailButtons[12] = btn_color13;
+            mDetailButtons[13] = btn_color14;
+            mDetailButtons[14] = btn_color15;
+            mDetailButtons[15] = btn_color16;
         }
 
         // Lock the bitmap's bits;
         public void LockImage(BitmapImage image)
         {
-            this.image = BitmapImage2Bitmap(image);
-            imageURL = image.UriSource.LocalPath;
-            filename_block.Text = imageURL;
+            mTargetImage = BitmapImage2Bitmap(image);
+            mTargetImageURL = image.UriSource.LocalPath;
+            filename_block.Text = mTargetImageURL;
             txt_status.Text = "";
-            rect = new System.Drawing.Rectangle(0, 0, this.image.Width, this.image.Height);
-            bmpData = this.image.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            mRect = new System.Drawing.Rectangle(0, 0, mTargetImage.Width, mTargetImage.Height);
+            mTargetBmpData = mTargetImage.LockBits(mRect, System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
         }
 
         // Image Change Check function;
         public bool ImageChangeCheck(bool check)
         {
-            change_image = check;
+            mIsChangedImage = check;
             return false;
         }
 
         // The Analyze button action;
-        private void Analyze_click(object sender, RoutedEventArgs e)
+        private void ActionAnalyzeClick(object sender, RoutedEventArgs e)
         {
             Stopwatch sw = new Stopwatch();
             topColorThread = new Thread(() =>
             {
                 sw.Start();
-                Dispatcher.Invoke(new TopColorThreadDelegate(Analyze_ButtonDisabler), false);
+                Dispatcher.Invoke(new TopColorThreadDelegate(AnalyzeButtonDisabler), false, Constants.STRING_BUTTON_ANALYZE);
                 BitmapRGBConvert();
                 ColorCounter();
                 ViewTopColors();
-               
-                change_image = false;
-                has_analyze = true;
-                Dispatcher.Invoke(new TopColorThreadDelegate(Analyze_ButtonDisabler), true);
+
+                mIsChangedImage = false;
+                Dispatcher.Invoke(new TopColorThreadDelegate(AnalyzeButtonDisabler), false, Constants.STRING_BUTTON_COMPLETE);
                 sw.Stop();
                 MessageBox.Show(sw.ElapsedMilliseconds.ToString() + "ms");
             });
@@ -137,7 +157,7 @@ namespace Schoolworks_image_and_color
 
             colorHistogramThread = new Thread(() =>
             {
-                GetHistogram(new Mat(imageURL));
+                GetHistogram(new Mat(mTargetImageURL));
             });
             colorHistogramThread.Start();
         }
@@ -146,7 +166,6 @@ namespace Schoolworks_image_and_color
         {
             Mat[] histogram = new Mat[Constants.HISTOGRAM_MAX];    // 0 = blue, 1 = green, 2 = red
             Mat[] histoImage = new Mat[Constants.HISTOGRAM_MAX];
-            const int width = 260, height = 200;      
             int[] dimensions = { 256 };         
             Rangef[] ranges = { new Rangef(0, 256) }; 
 
@@ -166,17 +185,16 @@ namespace Schoolworks_image_and_color
                     dims: 1,
                     histSize: dimensions,
                     ranges: ranges);
-
-                //Cv2.Normalize(histogram[i], histogram[i], 0, 1, NormTypes.MinMax, -1, null);
+                Cv2.Normalize(histogram[i], histogram[i]);
                 Cv2.MinMaxLoc(histogram[i], out minVal, out maxVal);
-                histogram[i] = histogram[i] * (maxVal != 0 ? height / maxVal : 0.0);
-                histoImage[i] = new Mat(new OpenCvSharp.Size(width, height), MatType.CV_8UC3, Scalar.All(255));
+                histogram[i] = histogram[i] * (maxVal != 0 ? Constants.HISTOGRAM_HEIGHT / maxVal : 0.0);
+                histoImage[i] = new Mat(new OpenCvSharp.Size(Constants.HISTOGRAM_WIDTH, Constants.HISTOGRAM_HEIGHT), MatType.CV_8UC3, Scalar.All(255));
             }
 
             int binWidth;
             for (int i = 0; i < dimensions[0]; i++)
             {
-                binWidth = (int)((double)width / dimensions[0]);
+                binWidth = (int)((double)Constants.HISTOGRAM_WIDTH / dimensions[0]);
                
                 Cv2.Line(histoImage[0], new OpenCvSharp.Point(i * binWidth, histoImage[0].Rows),
                     new OpenCvSharp.Point((i + 1) * binWidth, histoImage[0].Rows - (int)(histogram[0].Get<float>(i))), 
@@ -193,7 +211,15 @@ namespace Schoolworks_image_and_color
 
             for (int i = 0; i < Constants.HISTOGRAM_MAX; i++)
             {
-                OpenCvSharp.Extensions.BitmapConverter.ToBitmap(histoImage[i]).Save(System.IO.Directory.GetCurrentDirectory() + @"\" + i + ".png", System.Drawing.Imaging.ImageFormat.Png);
+                string url = System.IO.Directory.GetCurrentDirectory() + @"\" + i + ".png";
+                if (File.Exists(url))
+                {
+                    File.Delete(url);
+                }
+                Bitmap bitmap = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(histoImage[i]);
+                bitmap.Save(url, System.Drawing.Imaging.ImageFormat.Png);
+                bitmap.Dispose();
+                bitmap = null;
             }
 
             Dispatcher.Invoke(new ColorHistogramDelegate(DrawColorHistogram));
@@ -207,6 +233,7 @@ namespace Schoolworks_image_and_color
             {
                 images[i] = new BitmapImage();
                 images[i].BeginInit();
+                images[i].CacheOption = BitmapCacheOption.OnLoad;
                 images[i].UriSource = new Uri(cur + @"\" + i + ".png");
                 images[i].EndInit();
             }
@@ -215,73 +242,74 @@ namespace Schoolworks_image_and_color
             img_color_histogram_red.Source = images[2];
         }
 
-        private void Analyze_ButtonDisabler(bool check)
+        private void AnalyzeButtonDisabler(bool check, string reference)
         {
             btn_analyze.IsEnabled = check;
+            btn_analyze.Content = FindResource(reference);
         }
 
         // Detail_clicks button actions show the details(Color details);
-        private void Detail_click1(object sender, RoutedEventArgs e)
+        private void ActionDetail1(object sender, RoutedEventArgs e)
         {
             Detail_Window(0);
         }
-        private void Detail_click2(object sender, RoutedEventArgs e)
+        private void ActionDetail2(object sender, RoutedEventArgs e)
         {
             Detail_Window(1);
         }
-        private void Detail_click3(object sender, RoutedEventArgs e)
+        private void ActionDetail3(object sender, RoutedEventArgs e)
         {
             Detail_Window(2);
         }
-        private void Detail_click4(object sender, RoutedEventArgs e)
+        private void ActionDetail4(object sender, RoutedEventArgs e)
         {
             Detail_Window(3);
         }
-        private void Detail_click5(object sender, RoutedEventArgs e)
+        private void ActionDetail5(object sender, RoutedEventArgs e)
         {
             Detail_Window(4);
         }
-        private void Detail_click6(object sender, RoutedEventArgs e)
+        private void ActionDetail6(object sender, RoutedEventArgs e)
         {
             Detail_Window(5);
         }
-        private void Detail_click7(object sender, RoutedEventArgs e)
+        private void ActionDetail7(object sender, RoutedEventArgs e)
         {
             Detail_Window(6);
         }
-        private void Detail_click8(object sender, RoutedEventArgs e)
+        private void ActionDetail8(object sender, RoutedEventArgs e)
         {
             Detail_Window(7);
         }
-        private void Detail_click9(object sender, RoutedEventArgs e)
+        private void ActionDetail9(object sender, RoutedEventArgs e)
         {
             Detail_Window(8);
         }
-        private void Detail_click10(object sender, RoutedEventArgs e)
+        private void ActionDetail10(object sender, RoutedEventArgs e)
         {
             Detail_Window(9);
         }
-        private void Detail_click11(object sender, RoutedEventArgs e)
+        private void ActionDetail11(object sender, RoutedEventArgs e)
         {
             Detail_Window(10);
         }
-        private void Detail_click12(object sender, RoutedEventArgs e)
+        private void ActionDetail12(object sender, RoutedEventArgs e)
         {
             Detail_Window(11);
         }
-        private void Detail_click13(object sender, RoutedEventArgs e)
+        private void ActionDetail13(object sender, RoutedEventArgs e)
         {
             Detail_Window(12);
         }
-        private void Detail_click14(object sender, RoutedEventArgs e)
+        private void ActionDetail14(object sender, RoutedEventArgs e)
         {
             Detail_Window(13);
         }
-        private void Detail_click15(object sender, RoutedEventArgs e)
+        private void ActionDetail15(object sender, RoutedEventArgs e)
         {
             Detail_Window(14);
         }
-        private void Detail_click16(object sender, RoutedEventArgs e)
+        private void ActionDetail16(object sender, RoutedEventArgs e)
         {
             Detail_Window(15);
         }
@@ -293,10 +321,10 @@ namespace Schoolworks_image_and_color
             StreamWriter streamwriter = new StreamWriter("analyzer.dat");
 
             // Get the address of the first line;
-            IntPtr ptr = bmpData.Scan0;
+            IntPtr ptr = mTargetBmpData.Scan0;
 
             // Declare an array to hold the bytes of the bitmap;
-            int bytes = Math.Abs(bmpData.Stride) * image.Height;
+            int bytes = Math.Abs(mTargetBmpData.Stride) * mTargetImage.Height;
             byte[] rgbValues = new byte[bytes];
             // ↑ rgbValues[i] -> i%3==0(R), i%3==1(G), i%3==2(B)
 
@@ -306,12 +334,12 @@ namespace Schoolworks_image_and_color
                 System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
 
                 int numBytes = 0;
-                for (int y = 0; y < image.Height; y++)
+                for (int y = 0; y < mTargetImage.Height; y++)
                 {
-                    for (int x = 0; x < image.Width; x++)
+                    for (int x = 0; x < mTargetImage.Width; x++)
                     {
                         // numBytes for 24Bit Color;
-                        numBytes = ((y * image.Height) + x) * 3;
+                        numBytes = ((y * mTargetImage.Height) + x) * 3;
                         if (numBytes + 2 < bytes)
                             streamwriter.WriteLine(rgbValues[numBytes + 2] + "-" + rgbValues[numBytes + 1] + "-" + rgbValues[numBytes]);
                     }
@@ -323,7 +351,7 @@ namespace Schoolworks_image_and_color
             }
             finally
             {
-                image.UnlockBits(bmpData);
+                mTargetImage.UnlockBits(mTargetBmpData);
                 streamwriter.Close();
             }
         }
@@ -349,7 +377,7 @@ namespace Schoolworks_image_and_color
                 {
                     if(tmpColor.ContainsKey(line))
                     {
-                        tmpColor[line].cnt++;
+                        tmpColor[line].Count++;
                     }
                     else
                     {
@@ -366,7 +394,7 @@ namespace Schoolworks_image_and_color
             {
                 foreach (KeyValuePair<string, ColorC> tmp in tmpColor)
                 {
-                    streamwriter.WriteLine(tmp.Value.color_code + "-" + tmp.Value.cnt);
+                    streamwriter.WriteLine(tmp.Value.ColorCode + "-" + tmp.Value.Count);
                 }
                 streamwriter.Close();
                 streamreader.Close();
@@ -399,7 +427,7 @@ namespace Schoolworks_image_and_color
                     {
                         for(int i = 0; i < Constants.LIST_MAX - 1; i++)
                         {
-                            if(color[i].frequency > color[i + 1].frequency)
+                            if(color[i].Frequency > color[i + 1].Frequency)
                             {
                                 RGB tmp = color[i];
                                 color[i] = color[i + 1];
@@ -412,7 +440,7 @@ namespace Schoolworks_image_and_color
                     {
                         for(int i = 0; i < Constants.LIST_MAX; i++)
                         {
-                            if(color[i].frequency < int.Parse(lineSplit[Constants.STRING_DIVIDE_FREQUENCY]))
+                            if(color[i].Frequency < int.Parse(lineSplit[Constants.STRING_DIVIDE_FREQUENCY]))
                             {
                                 color[i] = new RGB(lineSplit[Constants.STRING_DIVIDE_RED], lineSplit[Constants.STRING_DIVIDE_GREEN],
                                     lineSplit[Constants.STRING_DIVIDE_BLUE], lineSplit[Constants.STRING_DIVIDE_FREQUENCY]);
@@ -436,44 +464,26 @@ namespace Schoolworks_image_and_color
             {
                 for (int i = 0; i < Constants.LIST_MAX; i++)
                 {
-                    streamwriter.WriteLine(color[i].red + "-" + color[i].green + "-" + color[i].blue + "-" + color[i].frequency);
+                    streamwriter.WriteLine(color[i].Red + "-" + color[i].Green + "-" + color[i].Blue + "-" + color[i].Frequency);
                 }
                 streamwriter.Close();
                 streamreader.Close();
                 File.Delete("colorcount.dat");
             }
 
-            max = color[0].frequency;
+            max = color[0].Frequency;
             min = max;
             for(int i = 0; i < Constants.LIST_MAX; i++)
             {
-                if (max < color[i].frequency)
+                if (max < color[i].Frequency)
                 {
-                    max = color[i].frequency;
+                    max = color[i].Frequency;
                 }
-                else if (min > color[i].frequency)
+                else if (min > color[i].Frequency)
                 {
-                    min = color[i].frequency;
+                    min = color[i].Frequency;
                 }
             }
-
-            // Show rectangles of the frequency;
-            rectangle[0] = rect_color1;
-            rectangle[1] = rect_color2;
-            rectangle[2] = rect_color3;
-            rectangle[3] = rect_color4;
-            rectangle[4] = rect_color5;
-            rectangle[5] = rect_color6;
-            rectangle[6] = rect_color7;
-            rectangle[7] = rect_color8;
-            rectangle[8] = rect_color9;
-            rectangle[9] = rect_color10;
-            rectangle[10] = rect_color11;
-            rectangle[11] = rect_color12;
-            rectangle[12] = rect_color13;
-            rectangle[13] = rect_color14;
-            rectangle[14] = rect_color15;
-            rectangle[15] = rect_color16;
 
             // According to result, Fill the rectangle;
             Dispatcher.Invoke(new SetRectangleColorsDelegate(SetRectangleColor), color, max);
@@ -481,28 +491,14 @@ namespace Schoolworks_image_and_color
 
         private void SetRectangleColor(RGB[] color, int max)
         {
-            for (int i = 0; i < 16; i++)
+            double height;
+            for (int i = 0; i < Constants.LIST_MAX; i++)
             {
-                rectangle[i].Fill = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)color[i].red, (byte)color[i].green, (byte)color[i].blue));
-                double height = (double)color[i].frequency;
-                rectangle[i].Height = height / max * Constants.RECTANGLE_MAX_HEIGHT;
+                mColorList[i].Fill = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)color[i].Red, (byte)color[i].Green, (byte)color[i].Blue));
+                height = (double)color[i].Frequency;
+                mColorList[i].Height = height / max * Constants.RECTANGLE_MAX_HEIGHT;
+                mDetailButtons[i].IsEnabled = true;
             }
-            btn_color1.IsEnabled = true;
-            btn_color2.IsEnabled = true;
-            btn_color3.IsEnabled = true;
-            btn_color4.IsEnabled = true;
-            btn_color5.IsEnabled = true;
-            btn_color6.IsEnabled = true;
-            btn_color7.IsEnabled = true;
-            btn_color8.IsEnabled = true;
-            btn_color9.IsEnabled = true;
-            btn_color10.IsEnabled = true;
-            btn_color11.IsEnabled = true;
-            btn_color12.IsEnabled = true;
-            btn_color13.IsEnabled = true;
-            btn_color14.IsEnabled = true;
-            btn_color15.IsEnabled = true;
-            btn_color16.IsEnabled = true;
             txt_status.Text = "Analyze Complete";
         }
 
@@ -516,7 +512,7 @@ namespace Schoolworks_image_and_color
                 enc.Frames.Add(BitmapFrame.Create(bitmapImage));
                 enc.Save(outStream);
                 Bitmap bitmap = new Bitmap(outStream);
-
+                outStream.Close();
                 return new Bitmap(bitmap);
             }
         }
@@ -535,7 +531,9 @@ namespace Schoolworks_image_and_color
             image.EndInit();
 
             ImageSource sc = (ImageSource)image;
-
+            ms.Close();
+            bmp.Dispose();
+            bmp = null;
             return sc;
         }
 
@@ -555,46 +553,41 @@ namespace Schoolworks_image_and_color
                 cnt++;
             }
             color = line.Split('-');
-            detail.setDetail(color);
-            detail.Owner = this;
-            detail.Show();
+            mDetailWindow.setDetail(color);
+            streamreader.Close();
+            mDetailWindow.Owner = this;
+            mDetailWindow.Show();
         }
 
         // For Re-open Window;
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void ClosingWindow(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (mTargetImage != null)
+            {
+                mTargetImage.Dispose();
+                mTargetImage = null;
+            }
             (typeof(System.Windows.Window)).GetField("_isClosing", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(sender, false);
             e.Cancel = true;
             (sender as System.Windows.Window).Hide();
         }
 
         // When this window re-open, it is determined whether or not initialization;
-        private void Window_Activated(object sender, EventArgs e)
+        private void ActivatedWindow(object sender, EventArgs e)
         {
-            if (change_image && has_analyze)
+            if (mIsChangedImage)
             {
-                for (int i = 0; i < 16; i++)
+                for (int i = 0; i < Constants.LIST_MAX; i++)
                 {
-                    rectangle[i].Fill = new SolidColorBrush(System.Windows.Media.Color.FromArgb(0, 0, 0, 0));
-                    rectangle[i].Height = 0;
+                    mColorList[i].Fill = new SolidColorBrush(System.Windows.Media.Color.FromArgb(0, 0, 0, 0));
+                    mColorList[i].Height = 0;
+                    mDetailButtons[i].IsEnabled = false;
                 }
-                btn_color1.IsEnabled = false;
-                btn_color2.IsEnabled = false;
-                btn_color3.IsEnabled = false;
-                btn_color4.IsEnabled = false;
-                btn_color5.IsEnabled = false;
-                btn_color6.IsEnabled = false;
-                btn_color7.IsEnabled = false;
-                btn_color8.IsEnabled = false;
-                btn_color9.IsEnabled = false;
-                btn_color10.IsEnabled = false;
-                btn_color11.IsEnabled = false;
-                btn_color12.IsEnabled = false;
-                btn_color13.IsEnabled = false;
-                btn_color14.IsEnabled = false;
-                btn_color15.IsEnabled = false;
-                btn_color16.IsEnabled = false;
-                has_analyze = false;
+
+                img_color_histogram_blue.Source = null;
+                img_color_histogram_green.Source = null;
+                img_color_histogram_red.Source = null;
+                AnalyzeButtonDisabler(true, Constants.STRING_BUTTON_ANALYZE);
             }
         }
     }

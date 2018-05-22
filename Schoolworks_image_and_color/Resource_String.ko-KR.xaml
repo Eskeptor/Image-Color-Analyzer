@@ -5,6 +5,7 @@
 
     <System:String x:Key="analyze_txt_filename">현재 파일이름 :</System:String>
     <System:String x:Key="analyze_btn_analyze">분석</System:String>
+    <System:String x:Key="analyze_btn_complete">완료</System:String>
     <System:String x:Key="main_menu_file">파일</System:String>
     <System:String x:Key="main_menu_open">열기</System:String>
     <System:String x:Key="main_menu_close">닫기</System:String>
@@ -14,9 +15,17 @@
     <System:String x:Key="main_menu_win_reset">창 크기 초기화</System:String>
     <System:String x:Key="main_menu_win_optimize">창 크기 최적화</System:String>
     <System:String x:Key="main_menu_tools">도구</System:String>
-    <System:String x:Key="main_menu_analyze">분석</System:String>
+    <System:String x:Key="main_menu_analyze">히스토그램 분석</System:String>
+    <System:String x:Key="main_menu_similar">이미지 유사도 비교</System:String>
     <System:String x:Key="main_menu_help">도움말</System:String>
     <System:String x:Key="main_menu_about">프로그램에 대해서</System:String>
-    <System:String x:Key="about_context">이 프로그램은 대학교 프로젝트의 일환으로 만들어졌습니다. 본 프로그램은 "GNU General Public License 3"를 따릅니다. </System:String>
+    <System:String x:Key="about_context" xml:space="preserve">이 프로그램은 대학교 프로젝트의 일환으로 만들어졌습니다.&#13;본 프로그램은 "Apache License, Version 2.0"을(를) 따릅니다.&#13;만든이: 호남대학교 컴퓨터공학과 전예찬&#13;</System:String>
+    <System:String x:Key="analyze_group_one">빈도가 높은 색상</System:String>
+    <System:String x:Key="analyze_group_two">컬러 히스토그램</System:String>
+    <System:String x:Key="similar_group_target">대상 이미지</System:String>
+    <System:String x:Key="similar_group_result">결과 이미지</System:String>
+    <System:String x:Key="similar_group_complist">이미지 비교 리스트</System:String>
+    <System:String x:Key="similar_btn_image_select">이미지 넣기</System:String>
+    <System:String x:Key="msg_warning_similar_image">비교용 이미지를 넣어주세요.</System:String>
 
 </ResourceDictionary>

@@ -2,17 +2,6 @@
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-// Just Constant;
-static class Constant
-{
-    public const int WIDTH = 400;
-    public const int HEIGHT = 225;
-    public const int MIN_WIDTH = 400;
-    public const int MIN_HEIGHT = 225;
-    public const int OPTIMIZER_WIDTH = 1200;
-    public const int OPTIMIZER_HEIGHT = 1200;
-    public const double OPTIMIZER_PERCENT = 0.9;
-}
 
 namespace Schoolworks_image_and_color
 {
@@ -22,28 +11,31 @@ namespace Schoolworks_image_and_color
     public partial class MainWindow : Window
     {
         // Main Bitmap image;
-        BitmapImage mainImage = null;
+        private BitmapImage mMainImage = null;
         // Original Bitmap image width, height backup;
-        double width_backup, height_backup;
-        Analyzer analyzer;
-        About_Window about;
-        bool change_image;
+        private double mWidthOrigin, mHeightOrigin;
+        private Analyzer mWindowAnalyzer;
+        private About_Window mWindowAbout;
+        private SimilarWindow mWindowSimilar;
+        private bool mIsChangedImage;
+
         public MainWindow()
         {
             InitializeComponent();
-            main_form.Width = Constant.WIDTH;
-            main_form.Height = Constant.HEIGHT;
-            main_form.MinWidth = Constant.MIN_WIDTH;
-            main_form.MinHeight = Constant.MIN_HEIGHT;
-            width_backup = main_form.Width;
-            height_backup = main_form.Height;
-            analyzer = new Analyzer();
-            about = new About_Window();
-            change_image = false;
+            main_form.Width = Constants.WIDTH;
+            main_form.Height = Constants.HEIGHT;
+            main_form.MinWidth = Constants.MIN_WIDTH;
+            main_form.MinHeight = Constants.MIN_HEIGHT;
+            mWidthOrigin = main_form.Width;
+            mHeightOrigin = main_form.Height;
+            mWindowAnalyzer = new Analyzer();
+            mWindowAbout = new About_Window();
+            mWindowSimilar = new SimilarWindow();
+            mIsChangedImage = false;
         }
 
         /* 파일 메뉴(File Menu) -> 열기(Open) */
-        private void Open_click(object sender, RoutedEventArgs e)
+        private void ActionMenuOpen(object sender, RoutedEventArgs e)
         {           
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.DefaultExt = ".jpeg";
@@ -55,37 +47,39 @@ namespace Schoolworks_image_and_color
             {
                 menu_analyze.IsEnabled = true;
                 menu_close.IsEnabled = true;
-                mainImage = new BitmapImage();
-                mainImage.BeginInit();
-                mainImage.UriSource = new Uri(dlg.FileName);
-                mainImage.EndInit();
-                image.Source = mainImage;
-                width_backup = mainImage.Width;
-                height_backup = mainImage.Height;
-                Window_Optimizer();
-                change_image = true;
+                menu_similar.IsEnabled = true;
+                mMainImage = new BitmapImage();
+                mMainImage.BeginInit();
+                mMainImage.UriSource = new Uri(dlg.FileName);
+                mMainImage.EndInit();
+                image.Source = mMainImage;
+                mWidthOrigin = mMainImage.Width;
+                mHeightOrigin = mMainImage.Height + Constants.OPTIMIZER_UD_MARGIN;
+                ActionMenuWindowOptimize();
+                mIsChangedImage = true;
             }
             dlg.Reset();
         }
 
         /* 파일 메뉴(File Menu) -> 파일 닫기(Close) */
-        private void Close_click(object sender, RoutedEventArgs e)
+        private void ActionMenuClose(object sender, RoutedEventArgs e)
         {
             image.Source = null;
             menu_analyze.IsEnabled = false;
             menu_close.IsEnabled = false;
-            main_form.Width = Constant.WIDTH;
-            main_form.Height = Constant.HEIGHT;
+            menu_similar.IsEnabled = false;
+            main_form.Width = Constants.WIDTH;
+            main_form.Height = Constants.HEIGHT;
         }
 
         /* 파일 메뉴(File Menu) -> 종료(Exit) */
-        private void Exit_click(object sender, RoutedEventArgs e)
+        private void ActionMenuExit(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
 
         /* 창 메뉴(Window Menu) -> 창크기조절 활성화(Window Resize Enable) */
-        private void Resize_click(object sender, RoutedEventArgs e)
+        private void ActionMenuResize(object sender, RoutedEventArgs e)
         {
             if (main_form.ResizeMode == ResizeMode.NoResize)
             {
@@ -100,62 +94,70 @@ namespace Schoolworks_image_and_color
         }
 
         /* 창 메뉴(Window Menu) -> 창 크기 초기화(Window Size Reset) */
-        private void Reset_click(object sender, RoutedEventArgs e)
+        private void ActionMenuReset(object sender, RoutedEventArgs e)
         {
-            main_form.Width = Constant.WIDTH;
-            main_form.Height = Constant.HEIGHT;
+            main_form.Width = Constants.WIDTH;
+            main_form.Height = Constants.HEIGHT;
         }
 
         /* 창 메뉴(Window Menu) -> 창 크기 최적화(Window Size Optimize) */
-        private void Optimize_click(object sender, RoutedEventArgs e)
+        private void ActionMenuOptimize(object sender, RoutedEventArgs e)
         {
             if(menu_win_optimize.IsChecked == true)
             {
                 menu_win_optimize.IsChecked = false;
-                Window_Optimizer();
+                ActionMenuWindowOptimize();
             }
             else
             {
                 menu_win_optimize.IsChecked = true;
-                Window_Optimizer();
+                ActionMenuWindowOptimize();
             }
         }
 
-        /* 도구 메뉴(Tools Menu) -> 프로그램 정보(About Program) */
-        private void Analyze_click(object sender, RoutedEventArgs e)
+        /* 도구 메뉴(Tools Menu) -> 히스토그램 분석(Histogram Analysis) */
+        private void ActionMenuAnalyzer(object sender, RoutedEventArgs e)
         {
-            analyzer.LockImage(mainImage);
-            change_image = analyzer.ImageChangeCheck(change_image);
-            analyzer.Owner = this;
-            analyzer.Show();
+            mWindowAnalyzer.LockImage(mMainImage);
+            mIsChangedImage = mWindowAnalyzer.ImageChangeCheck(mIsChangedImage);
+            mWindowAnalyzer.Owner = this;
+            mWindowAnalyzer.Show();
+        }
+
+        /* 도구 메뉴(Tools Menu) -> 이미지 유사도 비교(Comparative analysis of image similarity) */
+        private void ActionMenuSimilar(object sender, RoutedEventArgs e)
+        {
+            mWindowSimilar.SetOriginImage(mMainImage);
+            mWindowSimilar.Owner = this;
+            mWindowSimilar.Show();
         }
 
         /* 도움말 메뉴(Help Menu) -> 프로그램 정보(About Program) */
-        private void About_click(object sender, RoutedEventArgs e)
+        private void ActionMenuAbout(object sender, RoutedEventArgs e)
         {
-            about.Owner = this;
-            about.Show();
+            mWindowAbout.Owner = this;
+            mWindowAbout.Show();
         }
 
         // Window Size Optimizer Function
-        private void Window_Optimizer()
+        private void ActionMenuWindowOptimize()
         {
             if (menu_win_optimize.IsChecked == true)
             {
-                double width = width_backup;
-                double height = height_backup;
-                while (width > Constant.OPTIMIZER_WIDTH || height > Constant.OPTIMIZER_HEIGHT)
+                double width = mWidthOrigin;
+                double height = mHeightOrigin;
+                while (width > Constants.OPTIMIZER_WIDTH || height > Constants.OPTIMIZER_HEIGHT)
                 {
-                    width *= Constant.OPTIMIZER_PERCENT;
-                    height *= Constant.OPTIMIZER_PERCENT;
+                    width *= Constants.OPTIMIZER_PERCENT;
+                    height *= Constants.OPTIMIZER_PERCENT;
                 }
                 main_form.Width = width;
                 main_form.Height = height;
             }
             else
             {
-                main_form.Width = width_backup;
-                main_form.Height = height_backup;
+                main_form.Width = mWidthOrigin;
+                main_form.Height = mHeightOrigin;
             }
         }
 

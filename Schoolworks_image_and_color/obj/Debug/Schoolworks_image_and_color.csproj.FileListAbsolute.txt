@@ -59,3 +59,46 @@ E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Sc
 E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.UserInterface.pdb
 E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.UserInterface.xml
 E:\Study\Visual Studio 2015\Projects\github_blend\Schoolworks_image_and_color\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.csproj.CopyComplete
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\dll\x86\OpenCvSharpExtern.dll
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\dll\x86\opencv_ffmpeg341.dll
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\dll\x64\OpenCvSharpExtern.dll
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\dll\x64\opencv_ffmpeg341_64.dll
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\Schoolworks_image_and_color.exe.config
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\Schoolworks_image_and_color.exe
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\Schoolworks_image_and_color.pdb
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.Blob.dll
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.dll
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.Extensions.dll
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.UserInterface.dll
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.pdb
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.xml
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.Blob.pdb
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.Blob.xml
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.Extensions.pdb
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.Extensions.xml
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.UserInterface.pdb
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.UserInterface.xml
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.csprojResolveAssemblyReference.cache
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Analyzer.g.cs
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\MainWindow.g.cs
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\about.g.cs
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Detail.g.cs
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\App.g.cs
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color_MarkupCompile.cache
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color_MarkupCompile.lref
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\App.baml
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Analyzer.baml
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\MainWindow.baml
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\about.baml
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Detail.baml
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Resource_String.en-US.baml
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Resource_String.ko-KR.baml
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.g.resources
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.Properties.Resources.resources
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.csproj.GenerateResource.cache
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.csproj.CoreCompileInputs.cache
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.csproj.CopyComplete
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.exe
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.pdb
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\SimilarWindow.g.cs
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\SimilarWindow.baml
