@@ -196,16 +196,16 @@ namespace Schoolworks_image_and_color
             {
                 binWidth = (int)((double)Constants.HISTOGRAM_WIDTH / dimensions[0]);
                
-                Cv2.Line(histoImage[0], new OpenCvSharp.Point(i * binWidth, histoImage[0].Rows),
-                    new OpenCvSharp.Point((i + 1) * binWidth, histoImage[0].Rows - (int)(histogram[0].Get<float>(i))), 
+                Cv2.Line(histoImage[0], new OpenCvSharp.Point(i * binWidth, histoImage[0].Rows - (int)(histogram[0].Get<float>(i))),
+                    new OpenCvSharp.Point((i + 1) * binWidth, histoImage[0].Rows), 
                     new Scalar(255, 0, 0));
 
-                Cv2.Line(histoImage[1], new OpenCvSharp.Point(i * binWidth, histoImage[1].Rows),
-                    new OpenCvSharp.Point((i + 1) * binWidth, histoImage[1].Rows - (int)(histogram[1].Get<float>(i))),
+                Cv2.Line(histoImage[1], new OpenCvSharp.Point(i * binWidth, histoImage[1].Rows - (int)(histogram[1].Get<float>(i))),
+                    new OpenCvSharp.Point((i + 1) * binWidth, histoImage[1].Rows),
                     new Scalar(0, 255, 0));
 
-                Cv2.Line(histoImage[2], new OpenCvSharp.Point(i * binWidth, histoImage[2].Rows),
-                    new OpenCvSharp.Point((i + 1) * binWidth, histoImage[2].Rows - (int)(histogram[2].Get<float>(i))),
+                Cv2.Line(histoImage[2], new OpenCvSharp.Point(i * binWidth, histoImage[2].Rows - (int)(histogram[2].Get<float>(i))),
+                    new OpenCvSharp.Point((i + 1) * binWidth, histoImage[2].Rows),
                     new Scalar(0, 0, 255));
             }
 

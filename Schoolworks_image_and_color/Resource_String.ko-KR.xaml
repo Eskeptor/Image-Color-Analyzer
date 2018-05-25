@@ -27,5 +27,7 @@
     <System:String x:Key="similar_group_complist">이미지 비교 리스트</System:String>
     <System:String x:Key="similar_btn_image_select">이미지 넣기</System:String>
     <System:String x:Key="msg_warning_similar_image">비교용 이미지를 넣어주세요.</System:String>
+    <System:String x:Key="similar_label">유사도:</System:String>
+    <System:String x:Key="similar_btn_histogram">히스토그램 보기</System:String>
 
 </ResourceDictionary>

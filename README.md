@@ -1,10 +1,10 @@
 # Welcome to my "Image and Color Project"
 ## About this project
 My School works project in Multimedia System class.
-## What's New? (Last updated 2018.5.22)
+## What's New? (Last updated 2018.5.25)
 ```
- 1) UI Change
- 2) Add Comparative analysis of image similarity(Comparing Histograms)
+ 1) UI Change(Analysis of image similarity)
+ 2) Bug fix
 ```
 ## Next Updates
 ```

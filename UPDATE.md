@@ -1,3 +1,8 @@
+##Update 2018.5.25
+```
+ 1) UI Change(Analysis of image similarity)
+ 2) Bug fix
+```
 ##Update 2018.5.22
 ```
  1) UI Change

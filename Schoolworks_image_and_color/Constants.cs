@@ -28,6 +28,7 @@
         public const string STRING_BUTTON_COMPLETE = "analyze_btn_complete";
         public const string STRING_BUTTON_SIMILAR = "similar_btn_image_select";
         public const string STRING_MSG_SIMILAR = "msg_warning_similar_image";
+        public const string STRING_SIMILAR_LABEL = "similar_label";
 
         public const int SIMILAR_MAX = 8;
     }

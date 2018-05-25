@@ -102,3 +102,5 @@ E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_
 E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.pdb
 E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\SimilarWindow.g.cs
 E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\SimilarWindow.baml
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\SimilarHistogram.g.cs
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\SimilarHistogram.baml

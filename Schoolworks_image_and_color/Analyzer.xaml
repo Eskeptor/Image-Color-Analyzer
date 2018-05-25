@@ -86,9 +86,9 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Image x:Name="img_color_histogram_blue" HorizontalAlignment="Left" Height="184.06" VerticalAlignment="Top" Width="242" Grid.Row="1" Margin="0,10,0,0" />
-                <Image x:Name="img_color_histogram_red" HorizontalAlignment="Left" Height="184.06" VerticalAlignment="Top" Width="242"/>
-                <Image x:Name="img_color_histogram_green" HorizontalAlignment="Left" Height="184.06" Margin="242,0,0,0" VerticalAlignment="Top" Width="242" />
+                <Image x:Name="img_color_histogram_blue" HorizontalAlignment="Left" Height="184.06" VerticalAlignment="Top" Width="242" Grid.Row="1" Margin="0,10,0,0" Stretch="Fill"/>
+                <Image x:Name="img_color_histogram_red" HorizontalAlignment="Left" Height="184.06" VerticalAlignment="Top" Width="242" Stretch="Fill"/>
+                <Image x:Name="img_color_histogram_green" HorizontalAlignment="Left" Height="184.06" Margin="242,0,0,0" VerticalAlignment="Top" Width="242"  Stretch="Fill"/>
             </Grid>
         </GroupBox>
     </Grid>

@@ -27,5 +27,7 @@
     <System:String x:Key="similar_group_complist">Compare Image List</System:String>
     <System:String x:Key="similar_btn_image_select">Select Image</System:String>
     <System:String x:Key="msg_warning_similar_image">Please insert images for comparison.</System:String>
-    
+    <System:String x:Key="similar_label">Similarity:</System:String>
+    <System:String x:Key="similar_btn_histogram">View Histogram</System:String>
+
 </ResourceDictionary>
