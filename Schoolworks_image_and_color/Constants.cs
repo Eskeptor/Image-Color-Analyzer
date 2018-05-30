@@ -22,7 +22,7 @@
 
         public const int HISTOGRAM_MAX = 3;
         public const int HISTOGRAM_WIDTH = 260;
-        public const int HISTOGRAM_HEIGHT = 194;
+        public const int HISTOGRAM_HEIGHT = 184;
 
         public const string STRING_BUTTON_ANALYZE = "analyze_btn_analyze";
         public const string STRING_BUTTON_COMPLETE = "analyze_btn_complete";

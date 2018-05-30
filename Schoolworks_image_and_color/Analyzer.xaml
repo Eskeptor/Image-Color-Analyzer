@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Closing="ClosingWindow"
         Activated="ActivatedWindow"
-        Title="{DynamicResource main_menu_analyze}" Height="483" Width="1022" ResizeMode="NoResize">
+        Title="{DynamicResource main_menu_analyze}" Height="493" Width="1102" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="500*"/>
@@ -61,34 +61,34 @@
                 <Rectangle x:Name="rect_color14" Grid.Column="13" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom"/>
                 <Rectangle x:Name="rect_color15" Grid.Column="14" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom" />
                 <Rectangle x:Name="rect_color16" Grid.Column="15" Fill="#FFF4F4F5" Stroke="Black" RenderTransformOrigin="0.5,1" VerticalAlignment="Bottom" />
-                <Button x:Name="btn_color1" Content="Color1" Grid.Row="1" FontSize="10" Click="ActionDetail1" IsEnabled="False"/>
-                <Button x:Name="btn_color2" Content="Color2" Grid.Row="1" Grid.Column="1" FontSize="10" Click="ActionDetail2" IsEnabled="False"/>
-                <Button x:Name="btn_color3" Content="Color3" Grid.Row="1" Grid.Column="2" FontSize="10" Click="ActionDetail3" IsEnabled="False"/>
-                <Button x:Name="btn_color4" Content="Color4" Grid.Row="1" Grid.Column="3" FontSize="10" Click="ActionDetail4" IsEnabled="False"/>
-                <Button x:Name="btn_color5" Content="Color5" Grid.Row="1" Grid.Column="4" FontSize="10" Click="ActionDetail5" IsEnabled="False"/>
-                <Button x:Name="btn_color6" Content="Color6" Grid.Row="1" Grid.Column="5" FontSize="10" Click="ActionDetail6" IsEnabled="False"/>
-                <Button x:Name="btn_color7" Content="Color7" Grid.Row="1" Grid.Column="6" FontSize="10" Click="ActionDetail7" IsEnabled="False"/>
-                <Button x:Name="btn_color8" Content="Color8" Grid.Row="1" Grid.Column="7" FontSize="10" Click="ActionDetail8" IsEnabled="False"/>
-                <Button x:Name="btn_color9" Content="Color9" Grid.Row="1" Grid.Column="8" FontSize="10" Click="ActionDetail9" IsEnabled="False"/>
-                <Button x:Name="btn_color10" Content="Color10" Grid.Row="1" Grid.Column="9" FontSize="10" Click="ActionDetail10" IsEnabled="False"/>
-                <Button x:Name="btn_color11" Content="Color11" Grid.Row="1" Grid.Column="10" FontSize="10" Click="ActionDetail11" IsEnabled="False"/>
-                <Button x:Name="btn_color12" Content="Color12" Grid.Row="1" Grid.Column="11" FontSize="10" Click="ActionDetail12" IsEnabled="False"/>
-                <Button x:Name="btn_color13" Content="Color13" Grid.Row="1" Grid.Column="12" FontSize="10" Click="ActionDetail13" IsEnabled="False"/>
-                <Button x:Name="btn_color14" Content="Color14" Grid.Row="1" Grid.Column="13" FontSize="10" Click="ActionDetail14" IsEnabled="False"/>
-                <Button x:Name="btn_color15" Content="Color15" Grid.Row="1" Grid.Column="14" FontSize="10" Click="ActionDetail15" IsEnabled="False"/>
-                <Button x:Name="btn_color16" Content="Color16" Grid.Row="1" Grid.Column="15" FontSize="10" Click="ActionDetail16" IsEnabled="False"/>
+                <Button x:Name="btn_color1" Content="Color" Grid.Row="1" FontSize="10" Click="ActionDetail1" IsEnabled="False"/>
+                <Button x:Name="btn_color2" Content="Color" Grid.Row="1" Grid.Column="1" FontSize="10" Click="ActionDetail2" IsEnabled="False"/>
+                <Button x:Name="btn_color3" Content="Color" Grid.Row="1" Grid.Column="2" FontSize="10" Click="ActionDetail3" IsEnabled="False"/>
+                <Button x:Name="btn_color4" Content="Color" Grid.Row="1" Grid.Column="3" FontSize="10" Click="ActionDetail4" IsEnabled="False"/>
+                <Button x:Name="btn_color5" Content="Color" Grid.Row="1" Grid.Column="4" FontSize="10" Click="ActionDetail5" IsEnabled="False"/>
+                <Button x:Name="btn_color6" Content="Color" Grid.Row="1" Grid.Column="5" FontSize="10" Click="ActionDetail6" IsEnabled="False"/>
+                <Button x:Name="btn_color7" Content="Color" Grid.Row="1" Grid.Column="6" FontSize="10" Click="ActionDetail7" IsEnabled="False"/>
+                <Button x:Name="btn_color8" Content="Color" Grid.Row="1" Grid.Column="7" FontSize="10" Click="ActionDetail8" IsEnabled="False"/>
+                <Button x:Name="btn_color9" Content="Color" Grid.Row="1" Grid.Column="8" FontSize="10" Click="ActionDetail9" IsEnabled="False"/>
+                <Button x:Name="btn_color10" Content="Color" Grid.Row="1" Grid.Column="9" FontSize="10" Click="ActionDetail10" IsEnabled="False"/>
+                <Button x:Name="btn_color11" Content="Color" Grid.Row="1" Grid.Column="10" FontSize="10" Click="ActionDetail11" IsEnabled="False"/>
+                <Button x:Name="btn_color12" Content="Color" Grid.Row="1" Grid.Column="11" FontSize="10" Click="ActionDetail12" IsEnabled="False"/>
+                <Button x:Name="btn_color13" Content="Color" Grid.Row="1" Grid.Column="12" FontSize="10" Click="ActionDetail13" IsEnabled="False"/>
+                <Button x:Name="btn_color14" Content="Color" Grid.Row="1" Grid.Column="13" FontSize="10" Click="ActionDetail14" IsEnabled="False"/>
+                <Button x:Name="btn_color15" Content="Color" Grid.Row="1" Grid.Column="14" FontSize="10" Click="ActionDetail15" IsEnabled="False"/>
+                <Button x:Name="btn_color16" Content="Color" Grid.Row="1" Grid.Column="15" FontSize="10" Click="ActionDetail16" IsEnabled="False"/>
             </Grid>
         </GroupBox>
 
         <GroupBox Header="{DynamicResource analyze_group_two}" Grid.Column="1" Margin="10,49,0,0">
-            <Grid HorizontalAlignment="Left" Height="388" VerticalAlignment="Top" Width="488">
+            <Grid HorizontalAlignment="Left" Height="393" VerticalAlignment="Top" Width="528" Margin="0,0,-2,0">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Image x:Name="img_color_histogram_blue" HorizontalAlignment="Left" Height="184.06" VerticalAlignment="Top" Width="242" Grid.Row="1" Margin="0,10,0,0" Stretch="Fill"/>
-                <Image x:Name="img_color_histogram_red" HorizontalAlignment="Left" Height="184.06" VerticalAlignment="Top" Width="242" Stretch="Fill"/>
-                <Image x:Name="img_color_histogram_green" HorizontalAlignment="Left" Height="184.06" Margin="242,0,0,0" VerticalAlignment="Top" Width="242"  Stretch="Fill"/>
+                <Image x:Name="img_color_histogram_blue" HorizontalAlignment="Left" Height="184.06" VerticalAlignment="Top" Width="260" Grid.Row="1" Margin="0,10,0,0" Stretch="Fill"/>
+                <Image x:Name="img_color_histogram_red" HorizontalAlignment="Left" Height="184.06" VerticalAlignment="Top" Width="260" Stretch="Fill"/>
+                <Image x:Name="img_color_histogram_green" HorizontalAlignment="Left" Height="184" Margin="265,0,-12,0" VerticalAlignment="Top" Width="260"  Stretch="Fill"/>
             </Grid>
         </GroupBox>
     </Grid>

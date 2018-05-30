@@ -41,3 +41,5 @@ E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_
 E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Release\Schoolworks_image_and_color.csproj.CopyComplete
 E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Release\Schoolworks_image_and_color.exe
 E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Release\Schoolworks_image_and_color.pdb
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Release\SimilarHistogram.g.cs
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Release\SimilarHistogram.baml

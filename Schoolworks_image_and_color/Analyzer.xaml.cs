@@ -318,41 +318,38 @@ namespace Schoolworks_image_and_color
         // and return bytes(Math.Abs(bmpData.Stride) * image.Height)
         private void BitmapRGBConvert()
         {
-            StreamWriter streamwriter = new StreamWriter("analyzer.dat");
-
-            // Get the address of the first line;
-            IntPtr ptr = mTargetBmpData.Scan0;
-
-            // Declare an array to hold the bytes of the bitmap;
-            int bytes = Math.Abs(mTargetBmpData.Stride) * mTargetImage.Height;
-            byte[] rgbValues = new byte[bytes];
-            // ↑ rgbValues[i] -> i%3==0(R), i%3==1(G), i%3==2(B)
-
-            try
+            using (StreamWriter streamwriter = new StreamWriter("analyzer.dat"))
             {
-                // Copy the RGB values into the array;
-                System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
+                // Get the address of the first line;
+                IntPtr ptr = mTargetBmpData.Scan0;
 
-                int numBytes = 0;
-                for (int y = 0; y < mTargetImage.Height; y++)
+                // Declare an array to hold the bytes of the bitmap;
+                int bytes = Math.Abs(mTargetBmpData.Stride) * mTargetImage.Height;
+                byte[] rgbValues = new byte[bytes];
+                // ↑ rgbValues[i] -> i%3==0(R), i%3==1(G), i%3==2(B)
+
+                try
                 {
-                    for (int x = 0; x < mTargetImage.Width; x++)
+                    // Copy the RGB values into the array;
+                    System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
+
+                    int numBytes = 0;
+                    for (int y = 0; y < mTargetImage.Height; y++)
                     {
-                        // numBytes for 24Bit Color;
-                        numBytes = ((y * mTargetImage.Height) + x) * 3;
-                        if (numBytes + 2 < bytes)
-                            streamwriter.WriteLine(rgbValues[numBytes + 2] + "-" + rgbValues[numBytes + 1] + "-" + rgbValues[numBytes]);
+                        for (int x = 0; x < mTargetImage.Width; x++)
+                        {
+                            // numBytes for 24Bit Color;
+                            numBytes = ((y * mTargetImage.Height) + x) * 3;
+                            if (numBytes + 2 < bytes)
+                                streamwriter.WriteLine(rgbValues[numBytes + 2] + "-" + rgbValues[numBytes + 1] + "-" + rgbValues[numBytes]);
+                        }
                     }
+                    mTargetImage.UnlockBits(mTargetBmpData);
                 }
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(this, ee.Message, "Exception");
-            }
-            finally
-            {
-                mTargetImage.UnlockBits(mTargetBmpData);
-                streamwriter.Close();
+                catch (Exception ee)
+                {
+                    MessageBox.Show(this, ee.Message, "Exception");
+                }
             }
         }
 
@@ -361,130 +358,124 @@ namespace Schoolworks_image_and_color
         private void ColorCounter()
         {
             // Read file "analyzer.dat" for analyze frequency and save new file "colorcount.dat";
-            StreamReader streamreader = new StreamReader("analyzer.dat");
-            // Save new file "colorcount.dat";
-            StreamWriter streamwriter = new StreamWriter("colorcount.dat");
-            // sameCheck is a variable for checking whether the values ​​at the current position.
-            // When sameCheck is true, raise the counter;
-            string line;
-            // tmpcolor is array for save the color; 
-            // tmpcolor's length is big -> loading speed is fast. but memory is bigger;
-            // tmpcolor's length is small -> loading speed is slow. but memory is lower;
-            Dictionary<string, ColorC> tmpColor = new Dictionary<string, ColorC>();
-            try
+            using (StreamReader streamreader = new StreamReader("analyzer.dat"))
             {
-                while ((line = streamreader.ReadLine()) != null)
+                // Save new file "colorcount.dat";
+                using (StreamWriter streamwriter = new StreamWriter("colorcount.dat"))
                 {
-                    if(tmpColor.ContainsKey(line))
+                    // sameCheck is a variable for checking whether the values ​​at the current position.
+                    // When sameCheck is true, raise the counter;
+                    string line;
+                    // tmpcolor is array for save the color; 
+                    // tmpcolor's length is big -> loading speed is fast. but memory is bigger;
+                    // tmpcolor's length is small -> loading speed is slow. but memory is lower;
+                    Dictionary<string, ColorC> tmpColor = new Dictionary<string, ColorC>();
+                    try
                     {
-                        tmpColor[line].Count++;
+                        while ((line = streamreader.ReadLine()) != null)
+                        {
+                            if (tmpColor.ContainsKey(line))
+                            {
+                                tmpColor[line].Count++;
+                            }
+                            else
+                            {
+                                tmpColor.Add(line, new ColorC(line));
+                            }
+                        }
+
+                        foreach (KeyValuePair<string, ColorC> tmp in tmpColor)
+                        {
+                            streamwriter.WriteLine(tmp.Value.ColorCode + "-" + tmp.Value.Count);
+                        }
                     }
-                    else
+                    catch (Exception e)
                     {
-                        tmpColor.Add(line, new ColorC(line));
+                        MessageBox.Show(this, "(ColorCounter)Exception : " + e.Message, "Exception");
                     }
                 }
-                
             }
-            catch (Exception e)
-            {
-                MessageBox.Show(this, "(ColorCounter)Exception : " + e.Message, "Exception");
-            }
-            finally
-            {
-                foreach (KeyValuePair<string, ColorC> tmp in tmpColor)
-                {
-                    streamwriter.WriteLine(tmp.Value.ColorCode + "-" + tmp.Value.Count);
-                }
-                streamwriter.Close();
-                streamreader.Close();
-                File.Delete("analyzer.dat");
-            }
+            File.Delete("analyzer.dat");
         }
 
         // Analyze colorcount.dat and drawing color histogram
         private void ViewTopColors()
         {
-            StreamReader streamreader = new StreamReader("colorcount.dat");
-            //This code(streamwriter) is test code(verify that codes for storage -> frequency array)
-            StreamWriter streamwriter = new StreamWriter("frequency.dat");
-
             RGB[] color = new RGB[16];
-           
-            int min;
-            int max;
 
-            // just counting
-            int colorCount = 0;
-            string line;
-            try
+            int min = 0;
+            int max = 0;
+            using (StreamReader streamreader = new StreamReader("colorcount.dat"))
             {
-                while ((line = streamreader.ReadLine()) != null)
+                //This code(streamwriter) is test code(verify that codes for storage -> frequency array)
+                using (StreamWriter streamwriter = new StreamWriter("frequency.dat"))
                 {
-                    string[] lineSplit = line.Split('-');
-
-                    if(colorCount == Constants.LIST_MAX)
+                    // just counting
+                    int colorCount = 0;
+                    string line;
+                    try
                     {
-                        for(int i = 0; i < Constants.LIST_MAX - 1; i++)
+                        while ((line = streamreader.ReadLine()) != null)
                         {
-                            if(color[i].Frequency > color[i + 1].Frequency)
+                            string[] lineSplit = line.Split('-');
+
+                            if (colorCount == Constants.LIST_MAX)
                             {
-                                RGB tmp = color[i];
-                                color[i] = color[i + 1];
-                                color[i + 1] = tmp;
+                                for (int i = 0; i < Constants.LIST_MAX - 1; i++)
+                                {
+                                    if (color[i].Frequency > color[i + 1].Frequency)
+                                    {
+                                        RGB tmp = color[i];
+                                        color[i] = color[i + 1];
+                                        color[i + 1] = tmp;
+                                    }
+                                }
                             }
-                        }
-                    }
 
-                    if(colorCount >= Constants.LIST_MAX)
-                    {
-                        for(int i = 0; i < Constants.LIST_MAX; i++)
-                        {
-                            if(color[i].Frequency < int.Parse(lineSplit[Constants.STRING_DIVIDE_FREQUENCY]))
+                            if (colorCount >= Constants.LIST_MAX)
                             {
-                                color[i] = new RGB(lineSplit[Constants.STRING_DIVIDE_RED], lineSplit[Constants.STRING_DIVIDE_GREEN],
+                                for (int i = 0; i < Constants.LIST_MAX; i++)
+                                {
+                                    if (color[i].Frequency < int.Parse(lineSplit[Constants.STRING_DIVIDE_FREQUENCY]))
+                                    {
+                                        color[i] = new RGB(lineSplit[Constants.STRING_DIVIDE_RED], lineSplit[Constants.STRING_DIVIDE_GREEN],
+                                            lineSplit[Constants.STRING_DIVIDE_BLUE], lineSplit[Constants.STRING_DIVIDE_FREQUENCY]);
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                color[colorCount++] = new RGB(lineSplit[Constants.STRING_DIVIDE_RED], lineSplit[Constants.STRING_DIVIDE_GREEN],
                                     lineSplit[Constants.STRING_DIVIDE_BLUE], lineSplit[Constants.STRING_DIVIDE_FREQUENCY]);
-                                break;
+                            }
+                        }
+                        for (int i = 0; i < Constants.LIST_MAX; i++)
+                        {
+                            streamwriter.WriteLine(color[i].Red + "-" + color[i].Green + "-" + color[i].Blue + "-" + color[i].Frequency);
+                        }
+
+                        max = color[0].Frequency;
+                        min = max;
+                        for (int i = 0; i < Constants.LIST_MAX; i++)
+                        {
+                            if (max < color[i].Frequency)
+                            {
+                                max = color[i].Frequency;
+                            }
+                            else if (min > color[i].Frequency)
+                            {
+                                min = color[i].Frequency;
                             }
                         }
                     }
-                    else
+                    catch (Exception e)
                     {
-                        color[colorCount++] = new RGB(lineSplit[Constants.STRING_DIVIDE_RED], lineSplit[Constants.STRING_DIVIDE_GREEN],
-                            lineSplit[Constants.STRING_DIVIDE_BLUE], lineSplit[Constants.STRING_DIVIDE_FREQUENCY]);
+                        MessageBox.Show(this, "(ColorHistogram)Exception : " + e.Message, "Exception");
                     }
                 }
-
             }
-            catch (Exception e)
-            {
-                MessageBox.Show(this, "(ColorHistogram)Exception : " + e.Message, "Exception");
-            }
-            finally
-            {
-                for (int i = 0; i < Constants.LIST_MAX; i++)
-                {
-                    streamwriter.WriteLine(color[i].Red + "-" + color[i].Green + "-" + color[i].Blue + "-" + color[i].Frequency);
-                }
-                streamwriter.Close();
-                streamreader.Close();
-                File.Delete("colorcount.dat");
-            }
-
-            max = color[0].Frequency;
-            min = max;
-            for(int i = 0; i < Constants.LIST_MAX; i++)
-            {
-                if (max < color[i].Frequency)
-                {
-                    max = color[i].Frequency;
-                }
-                else if (min > color[i].Frequency)
-                {
-                    min = color[i].Frequency;
-                }
-            }
-
+            File.Delete("colorcount.dat");
             // According to result, Fill the rectangle;
             Dispatcher.Invoke(new SetRectangleColorsDelegate(SetRectangleColor), color, max);
         }
@@ -540,21 +531,23 @@ namespace Schoolworks_image_and_color
         // Show Detail information of color;
         private void Detail_Window(int idx)
         {
-            StreamReader streamreader = new StreamReader("frequency.dat");
-            int cnt = 0;
-            string[] color = new string[4];
-            string line;
-            while ((line = streamreader.ReadLine()) != null)
+            using (StreamReader streamreader = new StreamReader("frequency.dat"))
             {
-                if (cnt == idx)
+                int cnt = 0;
+                string[] color = new string[4];
+                string line;
+                while ((line = streamreader.ReadLine()) != null)
                 {
-                    break;
+                    if (cnt == idx)
+                    {
+                        break;
+                    }
+                    cnt++;
                 }
-                cnt++;
+                color = line.Split('-');
+                mDetailWindow.setDetail(color);
             }
-            color = line.Split('-');
-            mDetailWindow.setDetail(color);
-            streamreader.Close();
+
             mDetailWindow.Owner = this;
             mDetailWindow.Show();
         }

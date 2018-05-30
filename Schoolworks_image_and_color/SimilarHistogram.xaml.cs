@@ -100,68 +100,6 @@ namespace Schoolworks_image_and_color
                     {
                         similar_histogram_img.Source = tmpImage;
                     }));
-
-                //if (File.Exists(originURL))
-                //{
-                //    mPrevOriginURL = originURL;
-                //    int[] histSize = { 256 };
-                //    Rangef[] range = { new Rangef(0f, 256f) };
-
-                //    Mat[] colorHist = new Mat[3];
-                //    Mat[] bgrMats = new Mat[3];
-                //    Cv2.Split(new Mat(originURL), out bgrMats);
-
-                //    for (int i = 0; i < 3; i++)
-                //    {
-                //        colorHist[i] = new Mat();
-                //        Cv2.CalcHist(
-                //            images: new[] { bgrMats[i] },
-                //            channels: new[] { 0 },
-                //            mask: new Mat(),
-                //            hist: colorHist[i],
-                //            dims: 1,
-                //            histSize: histSize,
-                //            ranges: range);
-                //        Cv2.Normalize(colorHist[i], colorHist[i], 0, 1, NormTypes.MinMax);
-                //    }
-
-                //    int histWidth = 268;
-                //    int histHeight = 159;
-                //    int binWidth = (int)((double)histWidth / histSize[0]);
-                //    Mat histImage = new Mat(histHeight, histWidth, MatType.CV_8UC3, new Scalar(0, 0, 0));
-                //    for (int i = 1; i < histSize[0]; i++)
-                //    {
-                //        Cv2.Line(histImage, new OpenCvSharp.Point(binWidth * (i - 1), histHeight - (int)(colorHist[0].At<float>(i - 1))),
-                //            new OpenCvSharp.Point(binWidth * (i), histHeight - (int)(colorHist[0].At<float>(i))),
-                //            new Scalar(255, 0, 0), 2, LineTypes.Link8, 0);
-                //        Cv2.Line(histImage, new OpenCvSharp.Point(binWidth * (i - 1), histHeight - (int)(colorHist[1].At<float>(i - 1))),
-                //            new OpenCvSharp.Point(binWidth * (i), histHeight - (int)(colorHist[1].At<float>(i))),
-                //            new Scalar(0, 255, 0), 2, LineTypes.Link8, 0);
-                //        Cv2.Line(histImage, new OpenCvSharp.Point(binWidth * (i - 1), histHeight - (int)(colorHist[2].At<float>(i - 1))),
-                //            new OpenCvSharp.Point(binWidth * (i), histHeight - (int)(colorHist[2].At<float>(i))),
-                //            new Scalar(0, 0, 255), 2, LineTypes.Link8, 0);
-                //    }
-
-                //    string histURL = System.IO.Directory.GetCurrentDirectory() + @"\histo" + type + ".png";
-                //    if (File.Exists(histURL))
-                //    {
-                //        File.Delete(histURL);
-                //    }
-                //    Bitmap bitmap = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(histImage);
-                //    bitmap.Save(histURL, System.Drawing.Imaging.ImageFormat.Png);
-                //    bitmap.Dispose();
-                //    bitmap = null;
-
-                //    BitmapImage tmpImage = new BitmapImage();
-                //    tmpImage.BeginInit();
-                //    tmpImage.CacheOption = BitmapCacheOption.OnLoad;
-                //    tmpImage.UriSource = new Uri(histURL);
-                //    tmpImage.EndInit();
-
-                //    Dispatcher.Invoke(new Action(delegate ()
-                //    {
-                //        similar_histogram_img.Source = tmpImage;
-                //    }));
                 }
             }
         }

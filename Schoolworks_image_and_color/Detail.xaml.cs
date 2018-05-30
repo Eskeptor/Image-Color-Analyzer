@@ -26,10 +26,10 @@ namespace Schoolworks_image_and_color
 
         public void setDetail(string[] color)
         {
-            this.box_red.Text = color[0];
-            this.box_green.Text = color[1];
-            this.box_blue.Text = color[2];
-            this.box_freq.Text = color[3];
+            box_red.Text = color[0];
+            box_green.Text = color[1];
+            box_blue.Text = color[2];
+            box_freq.Text = color[3];
         }
     }
 }
