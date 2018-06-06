@@ -204,7 +204,7 @@ namespace Schoolworks_image_and_color
                 {
                     str.Clear();
                     str.Append((string)FindResource(Constants.STRING_SIMILAR_LABEL));
-                    str.Append(string.Format(" {0:0.##}", mSimilarity[(int)position[i]]));
+                    str.Append(string.Format(" {0:0.####}", mSimilarity[(int)position[i]]));
                     str.Append("%");
                     mSimilarLabel[(int)position[i]].Content = str.ToString();
                 }

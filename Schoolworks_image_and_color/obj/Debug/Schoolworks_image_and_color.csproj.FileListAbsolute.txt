@@ -78,7 +78,6 @@ E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_
 E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.Extensions.xml
 E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.UserInterface.pdb
 E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\bin\Debug\OpenCvSharp.UserInterface.xml
-E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.csprojResolveAssemblyReference.cache
 E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Analyzer.g.cs
 E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\MainWindow.g.cs
 E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\about.g.cs
@@ -104,3 +103,4 @@ E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_
 E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\SimilarWindow.baml
 E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\SimilarHistogram.g.cs
 E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\SimilarHistogram.baml
+E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.csprojAssemblyReference.cache
