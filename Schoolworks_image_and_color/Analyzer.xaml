@@ -89,6 +89,7 @@
                 <Image x:Name="img_color_histogram_blue" HorizontalAlignment="Left" Height="184.06" VerticalAlignment="Top" Width="260" Grid.Row="1" Margin="0,10,0,0" Stretch="Fill"/>
                 <Image x:Name="img_color_histogram_red" HorizontalAlignment="Left" Height="184.06" VerticalAlignment="Top" Width="260" Stretch="Fill"/>
                 <Image x:Name="img_color_histogram_green" HorizontalAlignment="Left" Height="184" Margin="265,0,-12,0" VerticalAlignment="Top" Width="260"  Stretch="Fill"/>
+                <Image x:Name="img_color_histogram_total" HorizontalAlignment="Left" Height="184" Margin="265,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="260" Stretch="Fill"/>
             </Grid>
         </GroupBox>
     </Grid>

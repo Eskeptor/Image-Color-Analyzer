@@ -39,7 +39,7 @@ namespace Schoolworks_image_and_color
         {           
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.DefaultExt = ".jpeg";
-            dlg.Filter = "JPEG/JPG Files (*.jpeg, *.jpg)|*.jpeg;*.jpg|GIF Files (*.gif)|*.gif|Bitmap Files (*.bmp)|*.bmp|PNG Files (*.png)|*.png";
+            dlg.Filter = "Image Files|*.jpeg;*.jpg;*.gif;*.bmp;*.png";
 
             Nullable<bool> result = dlg.ShowDialog();
 

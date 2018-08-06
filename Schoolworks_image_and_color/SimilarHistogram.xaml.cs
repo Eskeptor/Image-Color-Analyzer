@@ -65,6 +65,7 @@ namespace Schoolworks_image_and_color
                     }
 
                     int binWidth;
+                    // 파란색 그래프
                     for (int i = 0; i < dimensions[0]; i++)
                     {
                         binWidth = (int)((double)histWidth / dimensions[0]);
@@ -72,9 +73,23 @@ namespace Schoolworks_image_and_color
                         Cv2.Line(histImage, new OpenCvSharp.Point(i * binWidth, histImage.Rows - (int)colorHist[0].Get<float>(i)), 
                             new OpenCvSharp.Point((i + 1) * binWidth, histImage.Rows), 
                             new Scalar(255,0,0));
+                    }
+
+                    // 초록색 그래프
+                    for (int i = 0; i < dimensions[0]; i++)
+                    {
+                        binWidth = (int)((double)histWidth / dimensions[0]);
+
                         Cv2.Line(histImage, new OpenCvSharp.Point(i * binWidth, histImage.Rows - (int)colorHist[1].Get<float>(i)),
                             new OpenCvSharp.Point((i + 1) * binWidth, histImage.Rows),
                             new Scalar(0, 255, 0));
+                    }
+
+                    // 빨간색 그래프
+                    for (int i = 0; i < dimensions[0]; i++)
+                    {
+                        binWidth = (int)((double)histWidth / dimensions[0]);
+
                         Cv2.Line(histImage, new OpenCvSharp.Point(i * binWidth, histImage.Rows - (int)colorHist[2].Get<float>(i)),
                             new OpenCvSharp.Point((i + 1) * binWidth, histImage.Rows),
                             new Scalar(0, 0, 255));

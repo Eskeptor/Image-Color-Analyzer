@@ -165,14 +165,15 @@ namespace Schoolworks_image_and_color
         private void GetHistogram(Mat source)
         {
             Mat[] histogram = new Mat[Constants.HISTOGRAM_MAX];    // 0 = blue, 1 = green, 2 = red
-            Mat[] histoImage = new Mat[Constants.HISTOGRAM_MAX];
+            Mat[] histoImage = new Mat[Constants.HISTOGRAM_MAX + 1];
             int[] dimensions = { 256 };         
-            Rangef[] ranges = { new Rangef(0, 256) }; 
+            Rangef[] ranges = { new Rangef(0, 256) };
 
             // channel
             // 0 = blue
             // 1 = green
             // 2 = red
+
             double minVal, maxVal;
             for (int i = 0; i < Constants.HISTOGRAM_MAX; i++)
             {
@@ -191,7 +192,12 @@ namespace Schoolworks_image_and_color
                 histoImage[i] = new Mat(new OpenCvSharp.Size(Constants.HISTOGRAM_WIDTH, Constants.HISTOGRAM_HEIGHT), MatType.CV_8UC3, Scalar.All(255));
             }
 
+            // Total 이미지
+            histoImage[3] = new Mat(new OpenCvSharp.Size(Constants.HISTOGRAM_WIDTH, Constants.HISTOGRAM_HEIGHT), MatType.CV_8UC3, Scalar.All(255));
+
             int binWidth;
+
+            // 파란색
             for (int i = 0; i < dimensions[0]; i++)
             {
                 binWidth = (int)((double)Constants.HISTOGRAM_WIDTH / dimensions[0]);
@@ -200,16 +206,40 @@ namespace Schoolworks_image_and_color
                     new OpenCvSharp.Point((i + 1) * binWidth, histoImage[0].Rows), 
                     new Scalar(255, 0, 0));
 
+                Cv2.Line(histoImage[3], new OpenCvSharp.Point(i * binWidth, histoImage[3].Rows - (int)(histogram[0].Get<float>(i))),
+                    new OpenCvSharp.Point((i + 1) * binWidth, histoImage[3].Rows),
+                    new Scalar(255, 0, 0));
+            }
+
+            // 초록색
+            for (int i = 0; i < dimensions[0]; i++)
+            {
+                binWidth = (int)((double)Constants.HISTOGRAM_WIDTH / dimensions[0]);
+
                 Cv2.Line(histoImage[1], new OpenCvSharp.Point(i * binWidth, histoImage[1].Rows - (int)(histogram[1].Get<float>(i))),
                     new OpenCvSharp.Point((i + 1) * binWidth, histoImage[1].Rows),
                     new Scalar(0, 255, 0));
 
+                Cv2.Line(histoImage[3], new OpenCvSharp.Point(i * binWidth, histoImage[3].Rows - (int)(histogram[1].Get<float>(i))),
+                    new OpenCvSharp.Point((i + 1) * binWidth, histoImage[3].Rows),
+                    new Scalar(0, 255, 0));
+            }
+
+            // 빨간색
+            for (int i = 0; i < dimensions[0]; i++)
+            {
+                binWidth = (int)((double)Constants.HISTOGRAM_WIDTH / dimensions[0]);
+
                 Cv2.Line(histoImage[2], new OpenCvSharp.Point(i * binWidth, histoImage[2].Rows - (int)(histogram[2].Get<float>(i))),
                     new OpenCvSharp.Point((i + 1) * binWidth, histoImage[2].Rows),
                     new Scalar(0, 0, 255));
+
+                Cv2.Line(histoImage[3], new OpenCvSharp.Point(i * binWidth, histoImage[3].Rows - (int)(histogram[2].Get<float>(i))),
+                    new OpenCvSharp.Point((i + 1) * binWidth, histoImage[3].Rows),
+                    new Scalar(0, 0, 255));
             }
 
-            for (int i = 0; i < Constants.HISTOGRAM_MAX; i++)
+            for (int i = 0; i < Constants.HISTOGRAM_MAX + 1; i++)
             {
                 string url = System.IO.Directory.GetCurrentDirectory() + @"\" + i + ".png";
                 if (File.Exists(url))
@@ -228,8 +258,8 @@ namespace Schoolworks_image_and_color
         private void DrawColorHistogram()
         {
             string cur = System.IO.Directory.GetCurrentDirectory();
-            BitmapImage[] images = new BitmapImage[Constants.HISTOGRAM_MAX];
-            for (int i = 0; i < Constants.HISTOGRAM_MAX; i++)
+            BitmapImage[] images = new BitmapImage[Constants.HISTOGRAM_MAX + 1];
+            for (int i = 0; i < Constants.HISTOGRAM_MAX + 1; i++)
             {
                 images[i] = new BitmapImage();
                 images[i].BeginInit();
@@ -240,6 +270,7 @@ namespace Schoolworks_image_and_color
             img_color_histogram_blue.Source = images[0];
             img_color_histogram_green.Source = images[1];
             img_color_histogram_red.Source = images[2];
+            img_color_histogram_total.Source = images[3];
         }
 
         private void AnalyzeButtonDisabler(bool check, string reference)

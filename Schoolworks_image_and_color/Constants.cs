@@ -20,7 +20,7 @@
 
         public const double RECTANGLE_MAX_HEIGHT = 300;
 
-        public const int HISTOGRAM_MAX = 3;
+        public const int HISTOGRAM_MAX = 3;     // r, g, b
         public const int HISTOGRAM_WIDTH = 260;
         public const int HISTOGRAM_HEIGHT = 184;
 
