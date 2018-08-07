@@ -94,9 +94,11 @@ namespace Schoolworks_image_and_color
                 Stopwatch sw = new Stopwatch();
                 Thread analyzeThread = new Thread(() =>
                 {
+                    MyLog.LogManager.Log("SimilarImage-분석 시작");
                     sw.Start();
                     Analyze();
                     sw.Stop();
+                    MyLog.LogManager.Log("SimilarImage-분석 종료");
                     MessageBox.Show(sw.ElapsedMilliseconds.ToString() + "ms");
                 });
                 analyzeThread.Start();
@@ -111,6 +113,7 @@ namespace Schoolworks_image_and_color
         {
             ArrayList position = CountImage();
             int length = position.Count;
+
             Mat[] srcImage = new Mat[length];
             Mat[] hsvImage = new Mat[length];
             Mat[] histogram = new Mat[length];
@@ -180,10 +183,11 @@ namespace Schoolworks_image_and_color
                     }
                 }
                 mSimilarity[(int)position[i]] = (float)bass * 100;
-                Console.WriteLine("Method[" + (int)position[i] + "] Perfect: " + mSimilarity[(int)position[i]]);
+                MyLog.LogManager.Log("SimilarImage-Analyze-Method[" + (int)position[i] + "] Perfect: " + mSimilarity[(int)position[i]]);
             }
 
-            Console.WriteLine("가장 유사한 그림의 유사도: " + maxValue);
+
+            MyLog.LogManager.Log("SimilarImage-Analyze-가장 유사한 그림의 유사도: " + maxValue);
             Dispatcher.Invoke(new Action(delegate ()
             {
                 BitmapImage tmpImage = new BitmapImage();

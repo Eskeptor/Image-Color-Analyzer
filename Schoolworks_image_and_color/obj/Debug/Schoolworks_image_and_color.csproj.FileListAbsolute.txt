@@ -149,3 +149,8 @@ D:\Project\ColorHistogram\Schoolworks_image_and_color\obj\Debug\Schoolworks_imag
 D:\Project\ColorHistogram\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.csproj.CopyComplete
 D:\Project\ColorHistogram\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.exe
 D:\Project\ColorHistogram\Schoolworks_image_and_color\obj\Debug\Schoolworks_image_and_color.pdb
+D:\Project\ColorHistogram\Schoolworks_image_and_color\bin\Debug\MyLog.dll
+D:\Project\ColorHistogram\Schoolworks_image_and_color\bin\Debug\BitmapExtension.dll
+D:\Project\ColorHistogram\Schoolworks_image_and_color\bin\Debug\BitmapExtension.pdb
+D:\Project\ColorHistogram\Schoolworks_image_and_color\obj\Debug\ContourWindow.g.cs
+D:\Project\ColorHistogram\Schoolworks_image_and_color\obj\Debug\ContourWindow.baml

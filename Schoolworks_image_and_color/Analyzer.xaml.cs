@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Threading;
 using OpenCvSharp;
+using System.Linq;
 
 
 // Lockbits Documentation MSDN : https://msdn.microsoft.com/en-us/library/5ey6h79d(v=vs.110).aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-1 
@@ -21,7 +22,7 @@ using OpenCvSharp;
 
 
 // ColorC class for ColorCount and Analyze Color;
-class ColorC
+class ColorC : IComparable
 {
     public ColorC(string code)
     {
@@ -30,9 +31,19 @@ class ColorC
     }
     public string ColorCode { get; set; }
     public int Count { get; set; }
+
+    public int CompareTo(object obj)
+    {
+        if (obj == null)
+            return 1;
+        if (obj is ColorC tmp)
+            return Count.CompareTo(tmp.Count);
+        else
+            throw new ArgumentException("ColorC 오브젝트가 아닙니다.");
+    }
 }
 
-class RGB
+struct RGB
 {
     public RGB(string red, string green, string blue, string frequency)
     {
@@ -47,14 +58,31 @@ class RGB
     public int Frequency { get; set; }
 }
 
+class CustomString
+{
+    public string Str { get; set; }
+    public CustomString(string str = null)
+    {
+        Str = str;
+    }
+    public static int operator -(CustomString s1, CustomString s2)
+    {
+        int i1 = int.Parse(s1.Str);
+        int i2 = int.Parse(s2.Str);
+        return Math.Abs(i1 - i2);
+    }
+   
+}
+
 namespace Schoolworks_image_and_color
 {
-
     /// <summary>
     /// Analyzer.xaml에 대한 상호 작용 논리
     /// </summary>
     public partial class Analyzer : System.Windows.Window
     {
+        private string TEXT_RANGE = string.Format("{0} ~ {1}", Constants.ERROR_VALUE_LIMIT_MIN, Constants.ERROR_VALUE_LIMIT_MAX);
+
         private Bitmap mTargetImage;
         private string mTargetImageURL;
         private Rectangle mRect;
@@ -74,6 +102,8 @@ namespace Schoolworks_image_and_color
         delegate void TopColorThreadDelegate(bool check, string reference);
         delegate void SetRectangleColorsDelegate(RGB[] colors, int max);
         delegate void ColorHistogramDelegate();
+
+        private int imageAnalyzeRange;
 
         public Analyzer()
         {
@@ -116,12 +146,15 @@ namespace Schoolworks_image_and_color
             mDetailButtons[13] = btn_color14;
             mDetailButtons[14] = btn_color15;
             mDetailButtons[15] = btn_color16;
+
+            txt_range.Foreground = System.Windows.Media.Brushes.Gray;
+            txt_range.Text = "1 ~ 200";
         }
 
         // Lock the bitmap's bits;
         public void LockImage(BitmapImage image)
         {
-            mTargetImage = BitmapImage2Bitmap(image);
+            mTargetImage = BitmapExtension.BitmapEx.BitmapImage2Bitmap(image);
             mTargetImageURL = image.UriSource.LocalPath;
             filename_block.Text = mTargetImageURL;
             txt_status.Text = "";
@@ -139,11 +172,37 @@ namespace Schoolworks_image_and_color
         // The Analyze button action;
         private void ActionAnalyzeClick(object sender, RoutedEventArgs e)
         {
+            if (txt_range.Text == TEXT_RANGE || txt_range.Text == string.Empty)
+            {
+                imageAnalyzeRange = Constants.ERROR_VALUE_LIMIT_DEFAULT;
+                string message = string.Format((string)FindResource("message_warning_range_default"), Constants.ERROR_VALUE_LIMIT_DEFAULT);
+                MessageBox.Show(message);
+            }
+            else 
+            {
+                imageAnalyzeRange = int.Parse(txt_range.Text);
+                if (imageAnalyzeRange >= Constants.ERROR_VALUE_LIMIT_MIN &&
+                imageAnalyzeRange <= Constants.ERROR_VALUE_LIMIT_MAX)
+                {
+                    string message = string.Format((string)FindResource("message_warning_range"), imageAnalyzeRange);
+                    MessageBox.Show(message);
+                }
+                else
+                {
+                    string message = string.Format((string)FindResource("message_warning_range_error"), Constants.ERROR_VALUE_LIMIT_MIN, Constants.ERROR_VALUE_LIMIT_MAX);
+                    MessageBox.Show(message);
+                    return;
+                }
+            }
+            
+
             Stopwatch sw = new Stopwatch();
             topColorThread = new Thread(() =>
             {
                 sw.Start();
                 Dispatcher.Invoke(new TopColorThreadDelegate(AnalyzeButtonDisabler), false, Constants.STRING_BUTTON_ANALYZE);
+                MyLog.LogManager.Log("Analyze-상위 16색 분석 시작");
+
                 BitmapRGBConvert();
                 ColorCounter();
                 ViewTopColors();
@@ -151,13 +210,16 @@ namespace Schoolworks_image_and_color
                 mIsChangedImage = false;
                 Dispatcher.Invoke(new TopColorThreadDelegate(AnalyzeButtonDisabler), false, Constants.STRING_BUTTON_COMPLETE);
                 sw.Stop();
+                MyLog.LogManager.Log("Analyze-상위 16색 분석 종료");
                 MessageBox.Show(sw.ElapsedMilliseconds.ToString() + "ms");
             });
             topColorThread.Start();
 
             colorHistogramThread = new Thread(() =>
             {
+                MyLog.LogManager.Log("Analyze-컬러 히스토그램 작업 시작");
                 GetHistogram(new Mat(mTargetImageURL));
+                MyLog.LogManager.Log("Analyze-컬러 히스토그램 작업 종료");
             });
             colorHistogramThread.Start();
         }
@@ -175,6 +237,7 @@ namespace Schoolworks_image_and_color
             // 2 = red
 
             double minVal, maxVal;
+            MyLog.LogManager.Log("Analyze-histogram-컬러 히스토그램 정보 생성");
             for (int i = 0; i < Constants.HISTOGRAM_MAX; i++)
             {
                 histogram[i] = new Mat();
@@ -191,12 +254,14 @@ namespace Schoolworks_image_and_color
                 histogram[i] = histogram[i] * (maxVal != 0 ? Constants.HISTOGRAM_HEIGHT / maxVal : 0.0);
                 histoImage[i] = new Mat(new OpenCvSharp.Size(Constants.HISTOGRAM_WIDTH, Constants.HISTOGRAM_HEIGHT), MatType.CV_8UC3, Scalar.All(255));
             }
+            MyLog.LogManager.Log("Analyze-histogram-컬러 히스토그램 정보 생성완료");
 
             // Total 이미지
             histoImage[3] = new Mat(new OpenCvSharp.Size(Constants.HISTOGRAM_WIDTH, Constants.HISTOGRAM_HEIGHT), MatType.CV_8UC3, Scalar.All(255));
 
             int binWidth;
 
+            MyLog.LogManager.Log("Analyze-histogram-Blue 그리기");
             // 파란색
             for (int i = 0; i < dimensions[0]; i++)
             {
@@ -211,6 +276,7 @@ namespace Schoolworks_image_and_color
                     new Scalar(255, 0, 0));
             }
 
+            MyLog.LogManager.Log("Analyze-histogram-Green 그리기");
             // 초록색
             for (int i = 0; i < dimensions[0]; i++)
             {
@@ -225,6 +291,7 @@ namespace Schoolworks_image_and_color
                     new Scalar(0, 255, 0));
             }
 
+            MyLog.LogManager.Log("Analyze-histogram-Red 그리기");
             // 빨간색
             for (int i = 0; i < dimensions[0]; i++)
             {
@@ -239,9 +306,10 @@ namespace Schoolworks_image_and_color
                     new Scalar(0, 0, 255));
             }
 
+            MyLog.LogManager.Log("Analyze-histogram-컬러 히스토그램 이미지화 시작");
             for (int i = 0; i < Constants.HISTOGRAM_MAX + 1; i++)
             {
-                string url = System.IO.Directory.GetCurrentDirectory() + @"\" + i + ".png";
+                string url = Directory.GetCurrentDirectory() + @"\" + i + ".png";
                 if (File.Exists(url))
                 {
                     File.Delete(url);
@@ -251,13 +319,13 @@ namespace Schoolworks_image_and_color
                 bitmap.Dispose();
                 bitmap = null;
             }
-
+            MyLog.LogManager.Log("Analyze-histogram-컬러 히스토그램 이미지화 완료");
             Dispatcher.Invoke(new ColorHistogramDelegate(DrawColorHistogram));
         }
 
         private void DrawColorHistogram()
         {
-            string cur = System.IO.Directory.GetCurrentDirectory();
+            string cur = Directory.GetCurrentDirectory();
             BitmapImage[] images = new BitmapImage[Constants.HISTOGRAM_MAX + 1];
             for (int i = 0; i < Constants.HISTOGRAM_MAX + 1; i++)
             {
@@ -349,6 +417,7 @@ namespace Schoolworks_image_and_color
         // and return bytes(Math.Abs(bmpData.Stride) * image.Height)
         private void BitmapRGBConvert()
         {
+            MyLog.LogManager.Log("Analyze-frequency-비트맵 컨버팅 시작");
             using (StreamWriter streamwriter = new StreamWriter("analyzer.dat"))
             {
                 // Get the address of the first line;
@@ -372,22 +441,24 @@ namespace Schoolworks_image_and_color
                             // numBytes for 24Bit Color;
                             numBytes = ((y * mTargetImage.Height) + x) * 3;
                             if (numBytes + 2 < bytes)
-                                streamwriter.WriteLine(rgbValues[numBytes + 2] + "-" + rgbValues[numBytes + 1] + "-" + rgbValues[numBytes]);
+                                streamwriter.WriteLine("{0}-{1}-{2}", rgbValues[numBytes + 2], rgbValues[numBytes + 1], rgbValues[numBytes]);
                         }
                     }
                     mTargetImage.UnlockBits(mTargetBmpData);
                 }
-                catch (Exception ee)
+                catch (Exception e)
                 {
-                    MessageBox.Show(this, ee.Message, "Exception");
+                    MyLog.LogManager.Log("오류: " + e.Message);
                 }
             }
+            MyLog.LogManager.Log("Analyze-frequency-비트맵 컨버팅 완료");
         }
 
         // It shows the RGB frequency using analyzer.dat and output colorcount.dat;
         // Caution!! : This function is very very heavy. Because the high frequency of the cull of 16 colors.
         private void ColorCounter()
         {
+            MyLog.LogManager.Log("Analyze-frequency-비트맵 컬러 카운팅 시작");
             // Read file "analyzer.dat" for analyze frequency and save new file "colorcount.dat";
             using (StreamReader streamreader = new StreamReader("analyzer.dat"))
             {
@@ -415,17 +486,58 @@ namespace Schoolworks_image_and_color
                             }
                         }
 
-                        foreach (KeyValuePair<string, ColorC> tmp in tmpColor)
+                        var list = from pair in tmpColor
+                                   orderby pair.Value descending
+                                   select pair;
+
+
+                        int count = 0;
+                        bool isSame = true;
+                        KeyValuePair<string, ColorC>[] tmpPair = new KeyValuePair<string, ColorC>[16];
+                        foreach (KeyValuePair<string, ColorC> tmp in list)
                         {
-                            streamwriter.WriteLine(tmp.Value.ColorCode + "-" + tmp.Value.Count);
+                            if (count == 0)
+                            {
+                                tmpPair[count] = tmp;
+                                streamwriter.WriteLine("{0}-{1}", tmp.Value.ColorCode, tmp.Value.Count);
+                                count++;
+                            }
+                            else if (count == Constants.LIST_MAX)
+                                break;
+                            else
+                            {
+                                for (int i = 0; i < count; i++)
+                                {
+                                    if (!GetColorErrorLimit(tmpPair[i].Value.ColorCode, tmp.Value.ColorCode))
+                                    {
+                                        isSame = false;
+                                        break;
+                                    }
+                                }
+                                if (isSame)
+                                {
+                                    tmpPair[count] = tmp;
+                                    streamwriter.WriteLine("{0}-{1}", tmp.Value.ColorCode, tmp.Value.Count);
+                                    count++;
+                                    
+                                }
+                                isSame = true;
+                            }
                         }
+                        
+                        //foreach (KeyValuePair<string, ColorC> tmp in tmpColor)
+                        //{
+                        //    streamwriter.WriteLine(tmp.Value.ColorCode + "-" + tmp.Value.Count);
+                        //}
                     }
                     catch (Exception e)
                     {
-                        MessageBox.Show(this, "(ColorCounter)Exception : " + e.Message, "Exception");
+                        MyLog.LogManager.Log("오류: " + e.Message);
                     }
+                    tmpColor.Clear();
                 }
             }
+            MyLog.LogManager.Log("Analyze-frequency-비트맵 컬러 카운팅 종료");
             File.Delete("analyzer.dat");
         }
 
@@ -436,6 +548,8 @@ namespace Schoolworks_image_and_color
 
             int min = 0;
             int max = 0;
+
+            MyLog.LogManager.Log("Analyze-frequency-색상 뿌리기 시작");
             using (StreamReader streamreader = new StreamReader("colorcount.dat"))
             {
                 //This code(streamwriter) is test code(verify that codes for storage -> frequency array)
@@ -444,6 +558,7 @@ namespace Schoolworks_image_and_color
                     // just counting
                     int colorCount = 0;
                     string line;
+                    
                     try
                     {
                         while ((line = streamreader.ReadLine()) != null)
@@ -502,13 +617,30 @@ namespace Schoolworks_image_and_color
                     }
                     catch (Exception e)
                     {
-                        MessageBox.Show(this, "(ColorHistogram)Exception : " + e.Message, "Exception");
+                        MyLog.LogManager.Log("오류: " + e.Message);
                     }
                 }
             }
-            File.Delete("colorcount.dat");
+            MyLog.LogManager.Log("Analyze-frequency-색상 뿌리기 종료");
+            // File.Delete("colorcount.dat");
             // According to result, Fill the rectangle;
             Dispatcher.Invoke(new SetRectangleColorsDelegate(SetRectangleColor), color, max);
+        }
+
+        private bool GetColorErrorLimit(string str1, string str2)
+        {
+            string[] color1 = str1.Split('-');
+            string[] color2 = str2.Split('-');
+            CustomString cus1 = new CustomString();
+            CustomString cus2 = new CustomString();
+            for (int i = 0; i < color1.Length; i++)
+            {
+                cus1.Str = color1[i];
+                cus2.Str = color2[i];
+                if (Math.Abs(cus1 - cus2) >= imageAnalyzeRange)
+                    return true;
+            }
+            return false;
         }
 
         private void SetRectangleColor(RGB[] color, int max)
@@ -517,51 +649,17 @@ namespace Schoolworks_image_and_color
             for (int i = 0; i < Constants.LIST_MAX; i++)
             {
                 mColorList[i].Fill = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)color[i].Red, (byte)color[i].Green, (byte)color[i].Blue));
-                height = (double)color[i].Frequency;
+                height = color[i].Frequency;
                 mColorList[i].Height = height / max * Constants.RECTANGLE_MAX_HEIGHT;
                 mDetailButtons[i].IsEnabled = true;
             }
             txt_status.Text = "Analyze Complete";
         }
 
-        // BitmapImage Convert to Bitmap;
-        private Bitmap BitmapImage2Bitmap(BitmapImage bitmapImage)
-        {
-
-            using (MemoryStream outStream = new MemoryStream())
-            {
-                BitmapEncoder enc = new BmpBitmapEncoder();
-                enc.Frames.Add(BitmapFrame.Create(bitmapImage));
-                enc.Save(outStream);
-                Bitmap bitmap = new Bitmap(outStream);
-                outStream.Close();
-                return new Bitmap(bitmap);
-            }
-        }
-
-        // Copyright: http://frasergreenroyd.com/how-to-convert-opencv-cvmat-to-system-bitmap-to-system-imagesource/
-        private ImageSource BitmapToImageSource(Bitmap imToConvert)
-        {
-            Bitmap bmp = new Bitmap(imToConvert);
-            MemoryStream ms = new MemoryStream();
-            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
-
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            ms.Seek(0, SeekOrigin.Begin);
-            image.StreamSource = ms;
-            image.EndInit();
-
-            ImageSource sc = (ImageSource)image;
-            ms.Close();
-            bmp.Dispose();
-            bmp = null;
-            return sc;
-        }
-
         // Show Detail information of color;
         private void Detail_Window(int idx)
         {
+            MyLog.LogManager.Log("Analyze-DetailWindow-디테일 윈도우 생성");
             using (StreamReader streamreader = new StreamReader("frequency.dat"))
             {
                 int cnt = 0;
@@ -611,7 +709,23 @@ namespace Schoolworks_image_and_color
                 img_color_histogram_blue.Source = null;
                 img_color_histogram_green.Source = null;
                 img_color_histogram_red.Source = null;
+                img_color_histogram_total.Source = null;
                 AnalyzeButtonDisabler(true, Constants.STRING_BUTTON_ANALYZE);
+            }
+        }
+
+        private void ActionRangeFocus(object sender, RoutedEventArgs e)
+        {
+            txt_range.Text = "";
+            txt_range.Foreground = System.Windows.Media.Brushes.Black;
+        }
+
+        private void ActionRangeLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txt_range.Text == "")
+            {
+                txt_range.Foreground = System.Windows.Media.Brushes.Gray;
+                txt_range.Text = TEXT_RANGE;
             }
         }
     }

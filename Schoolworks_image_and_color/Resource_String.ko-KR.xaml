@@ -19,6 +19,7 @@
     <System:String x:Key="main_menu_similar">이미지 유사도 비교</System:String>
     <System:String x:Key="main_menu_help">도움말</System:String>
     <System:String x:Key="main_menu_about">프로그램에 대해서</System:String>
+    <System:String x:Key="main_menu_contour">윤곽선 검출</System:String>
     <System:String x:Key="about_context" xml:space="preserve">이 프로그램은 대학교 프로젝트의 일환으로 만들어졌습니다.&#13;본 프로그램은 "Apache License, Version 2.0"을(를) 따릅니다.&#13;만든이: 호남대학교 컴퓨터공학과 전예찬&#13;</System:String>
     <System:String x:Key="analyze_group_one">빈도가 높은 색상 16개</System:String>
     <System:String x:Key="analyze_group_two">컬러 히스토그램</System:String>
@@ -29,5 +30,9 @@
     <System:String x:Key="msg_warning_similar_image">비교용 이미지를 넣어주세요.</System:String>
     <System:String x:Key="similar_label">유사도:</System:String>
     <System:String x:Key="similar_btn_histogram">히스토그램 보기</System:String>
+    <System:String x:Key="analyze_btn_color_range">색상 유사범위 :</System:String>
+    <System:String x:Key="message_warning_range_default">기본값({0}) 으로 분석합니다.</System:String>
+    <System:String x:Key="message_warning_range">설정된 값({0})으로 분석합니다.</System:String>
+    <System:String x:Key="message_warning_range_error">{0} 이상 {1} 이하의 값을 넣으세요.</System:String>
 
 </ResourceDictionary>

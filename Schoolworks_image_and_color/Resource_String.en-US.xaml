@@ -19,6 +19,7 @@
     <System:String x:Key="main_menu_similar">Comparative analysis of image similarity</System:String>
     <System:String x:Key="main_menu_help">Help</System:String>
     <System:String x:Key="main_menu_about">About Program</System:String>
+    <System:String x:Key="main_menu_contour">Contour Detection</System:String>
     <System:String x:Key="about_context" xml:space="preserve">This program is for my university report.&#13;This program follows the "Apache License, Version 2.0".&#13;Creator : Honam University Computer Engineering Department Jeon Ye-chan&#13;</System:String>
     <System:String x:Key="analyze_group_one">A high frequency color</System:String>
     <System:String x:Key="analyze_group_two">Color Histogram</System:String>
@@ -29,5 +30,9 @@
     <System:String x:Key="msg_warning_similar_image">Please insert images for comparison.</System:String>
     <System:String x:Key="similar_label">Similarity:</System:String>
     <System:String x:Key="similar_btn_histogram">View Histogram</System:String>
+    <System:String x:Key="analyze_btn_color_range">Color Similar Range :</System:String>
+    <System:String x:Key="message_warning_range_default">Analyze with default values.({0})</System:String>
+    <System:String x:Key="message_warning_range">Analyze with set values.({0})</System:String>
+    <System:String x:Key="message_warning_range_error">Please enter a value greater than {0} and less than {1}.</System:String>
 
 </ResourceDictionary>

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Blend for Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schoolworks_image_and_color", "Schoolworks_image_and_color\Schoolworks_image_and_color.csproj", "{56607A00-410E-4F74-AB98-EFDCA93E3125}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitmapExtension", "BitmapExtension\BitmapExtension.csproj", "{A4528167-F334-486F-BF51-2BCCDE506522}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{56607A00-410E-4F74-AB98-EFDCA93E3125}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56607A00-410E-4F74-AB98-EFDCA93E3125}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56607A00-410E-4F74-AB98-EFDCA93E3125}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4528167-F334-486F-BF51-2BCCDE506522}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4528167-F334-486F-BF51-2BCCDE506522}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4528167-F334-486F-BF51-2BCCDE506522}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4528167-F334-486F-BF51-2BCCDE506522}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6088EB66-53C9-4BC9-B87E-53FF6B2D758E}
 	EndGlobalSection
 EndGlobal

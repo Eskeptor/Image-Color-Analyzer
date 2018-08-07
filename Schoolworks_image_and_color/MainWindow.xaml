@@ -26,6 +26,7 @@
             <MenuItem x:Name="menu_tools" Header="{DynamicResource main_menu_tools}">
                 <MenuItem x:Name="menu_analyze" Header="{DynamicResource main_menu_analyze}" IsEnabled="False" Click="ActionMenuAnalyzer"/>
                 <MenuItem x:Name="menu_similar" Header="{DynamicResource main_menu_similar}" IsEnabled="False" Click="ActionMenuSimilar" />
+                <MenuItem x:Name="menu_contour" Header="{DynamicResource main_menu_contour}" IsEnabled="False" Click="ActionMenuContour"/>
             </MenuItem>
             <MenuItem x:Name="menu_help" Header="{DynamicResource main_menu_help}">
                 <MenuItem x:Name="menu_about" Header="{DynamicResource main_menu_about}" Click="ActionMenuAbout" />

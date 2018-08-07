@@ -17,6 +17,7 @@ namespace Schoolworks_image_and_color
         private Analyzer mWindowAnalyzer;
         private About_Window mWindowAbout;
         private SimilarWindow mWindowSimilar;
+        private ContourWindow mWindowContour;
         private bool mIsChangedImage;
 
         public MainWindow()
@@ -31,6 +32,7 @@ namespace Schoolworks_image_and_color
             mWindowAnalyzer = new Analyzer();
             mWindowAbout = new About_Window();
             mWindowSimilar = new SimilarWindow();
+            mWindowContour = new ContourWindow();
             mIsChangedImage = false;
         }
 
@@ -48,6 +50,7 @@ namespace Schoolworks_image_and_color
                 menu_analyze.IsEnabled = true;
                 menu_close.IsEnabled = true;
                 menu_similar.IsEnabled = true;
+                menu_contour.IsEnabled = true;
                 mMainImage = new BitmapImage();
                 mMainImage.BeginInit();
                 mMainImage.UriSource = new Uri(dlg.FileName);
@@ -57,6 +60,7 @@ namespace Schoolworks_image_and_color
                 mHeightOrigin = mMainImage.Height + Constants.OPTIMIZER_UD_MARGIN;
                 ActionMenuWindowOptimize();
                 mIsChangedImage = true;
+                MyLog.LogManager.Log("Main-이미지 불러옴");
             }
             dlg.Reset();
         }
@@ -68,8 +72,10 @@ namespace Schoolworks_image_and_color
             menu_analyze.IsEnabled = false;
             menu_close.IsEnabled = false;
             menu_similar.IsEnabled = false;
+            menu_contour.IsEnabled = false;
             main_form.Width = Constants.WIDTH;
             main_form.Height = Constants.HEIGHT;
+            MyLog.LogManager.Log("Main-이미지 초기화");
         }
 
         /* 파일 메뉴(File Menu) -> 종료(Exit) */
@@ -122,6 +128,7 @@ namespace Schoolworks_image_and_color
             mIsChangedImage = mWindowAnalyzer.ImageChangeCheck(mIsChangedImage);
             mWindowAnalyzer.Owner = this;
             mWindowAnalyzer.Show();
+            MyLog.LogManager.Log("Main-히스토그램 분석창 불러오기");
         }
 
         /* 도구 메뉴(Tools Menu) -> 이미지 유사도 비교(Comparative analysis of image similarity) */
@@ -130,6 +137,7 @@ namespace Schoolworks_image_and_color
             mWindowSimilar.SetOriginImage(mMainImage);
             mWindowSimilar.Owner = this;
             mWindowSimilar.Show();
+            MyLog.LogManager.Log("Main-이미지 유사도 분석창 불러오기");
         }
 
         /* 도움말 메뉴(Help Menu) -> 프로그램 정보(About Program) */
@@ -159,6 +167,13 @@ namespace Schoolworks_image_and_color
                 main_form.Width = mWidthOrigin;
                 main_form.Height = mHeightOrigin;
             }
+        }
+
+        private void ActionMenuContour(object sender, RoutedEventArgs e)
+        {
+            mWindowContour.SetImage(mMainImage, main_form.Width, main_form.Height);
+            mWindowContour.Owner = this;
+            mWindowContour.Show();
         }
 
         // When program is close, All Window close. (Detail window is dispatched, so it should be directly terminated);

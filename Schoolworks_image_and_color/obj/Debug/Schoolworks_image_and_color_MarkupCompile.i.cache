@@ -4,17 +4,17 @@
 exe
 C#
 .cs
-E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\obj\Debug\
+D:\Project\ColorHistogram\Schoolworks_image_and_color\obj\Debug\
 Schoolworks_image_and_color
 none
 false
 DEBUG;TRACE
-E:\Study\Visual Studio 2015\Projects\Image Color Analyzer\Schoolworks_image_and_color\App.xaml
-8-1237832021
+D:\Project\ColorHistogram\Schoolworks_image_and_color\App.xaml
+9937749707
 
-121714186824
-17-1497706634
-Analyzer.xaml;MainWindow.xaml;about.xaml;Detail.xaml;Resource_String.en-US.xaml;Resource_String.ko-KR.xaml;SimilarHistogram.xaml;SimilarWindow.xaml;
+16-1132237633
+19-1886193360
+Analyzer.xaml;ContourWindow.xaml;MainWindow.xaml;about.xaml;Detail.xaml;Resource_String.en-US.xaml;Resource_String.ko-KR.xaml;SimilarHistogram.xaml;SimilarWindow.xaml;
 
-False
+True
 

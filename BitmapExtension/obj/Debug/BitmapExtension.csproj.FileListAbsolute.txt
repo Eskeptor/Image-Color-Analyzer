@@ -1,0 +1,6 @@
+D:\Project\ColorHistogram\BitmapExtension\bin\Debug\BitmapExtension.dll
+D:\Project\ColorHistogram\BitmapExtension\bin\Debug\BitmapExtension.pdb
+D:\Project\ColorHistogram\BitmapExtension\obj\Debug\BitmapExtension.csprojAssemblyReference.cache
+D:\Project\ColorHistogram\BitmapExtension\obj\Debug\BitmapExtension.csproj.CoreCompileInputs.cache
+D:\Project\ColorHistogram\BitmapExtension\obj\Debug\BitmapExtension.dll
+D:\Project\ColorHistogram\BitmapExtension\obj\Debug\BitmapExtension.pdb

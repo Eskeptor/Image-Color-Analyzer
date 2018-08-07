@@ -1,14 +1,15 @@
 # Welcome to my "Image and Color Project"
 ## About this project
 My School works project in Multimedia System class.
-## What's New? (Last updated 2018.5.25)
+## What's New? (Last updated 2018.8.7)
 ```
- 1) UI Change(Analysis of image similarity)
- 2) Bug fix
+ 1) Bug fix
+ 2) Add function(Contour detection)
 ```
 ## Next Updates
 ```
  1) Bug fix
+ 2) Improve function(Similar Image detection)
 ```
 ## Manual
 ```
